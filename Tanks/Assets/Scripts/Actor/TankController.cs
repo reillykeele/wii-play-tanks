@@ -4,22 +4,12 @@ using Util.Helpers;
 
 namespace Actor
 {
-    [RequireComponent(typeof(Rigidbody))]
     [RequireComponent(typeof(PlayerInput))]
-    public class TankController : MonoBehaviour
+    public class TankController : BaseTankController
     {
         [SerializeField] private RectTransform _crosshair;
-        [SerializeField] private GameObject _projectilePrefab;
 
-        [SerializeField] private float _moveSpeed = 1f;
-        [SerializeField] private float _turnSpeed = 45f;
-
-        private Rigidbody _rb;
-        private Collider _collider;
         private PlayerInput _input;
-
-        [SerializeField] private Transform _turretTransform;
-        [SerializeField] private Transform _muzzleTransform;
 
         private Camera _camera;
 
@@ -28,16 +18,18 @@ namespace Actor
 
         private Vector3 _targetPos;
 
-        void Awake()
+        // TODO: Fire rate
+
+        protected override void Awake()
         {
-            _rb = GetComponent<Rigidbody>();
-            _collider = GetComponent<Collider>();
+            base.Awake();
+
             _input = GetComponent<PlayerInput>();
 
-            // var tankModel = gameObject.GetChildObject("Tank");
-            //
-            // _turretTransform = tankModel.GetChildObject("TankRenderers").transform;
-            // _muzzleTransform = _turretTransform.gameObject.GetChildObject("Muzzle").transform;
+            #if UNITY_EDITOR
+            if (_crosshair == null)
+                Debug.LogWarning("Cross hair is not set in the Editor.");
+            #endif
         }
 
         void Start()
@@ -47,7 +39,7 @@ namespace Actor
 
         void Update()
         {
-            Debug.DrawLine(transform.position, _targetPos);
+            // Debug.DrawLine(transform.position, _targetPos);
         }
 
         void FixedUpdate()
@@ -82,21 +74,19 @@ namespace Actor
 
             _targetPos = _camera.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, _camera.transform.position.y));
 
-            if (_crosshair != null)
-                _crosshair.position= mousePos;
-            else 
-                Debug.LogWarning("Cross hair is not set in the Editor.");
+            _crosshair.position= mousePos;
         }
 
         public void OnShoot(InputValue val)
         {
             if (val.isPressed == false) return;
 
-            Debug.Log("Shoot");
+            Shoot();
+        }
 
-            var projectileGameObject= Instantiate(_projectilePrefab, _muzzleTransform.position, Quaternion.identity);
-            var projectile = projectileGameObject.GetComponent<ProjectileController>();
-            projectile.SetDirection(_turretTransform.forward);
+        public override void Explode()
+        {
+            // Do not explode
         }
     }
 }

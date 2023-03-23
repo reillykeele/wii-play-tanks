@@ -3,7 +3,22 @@ guid: 14b96f7227dc48a458c44ecd5bd19f57
 ModelImporter:
   serializedVersion: 20300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: TankColour
+    second: {fileID: 2100000, guid: 052c8bbabfa1740498aec9b8ef5639fe, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: TankGrey
+    second: {fileID: 2100000, guid: 229517595b7c0c047892471cf8325ad4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: TankLights
+    second: {fileID: 2100000, guid: cee5d3a602b2b5142b9a30dec2618c9e, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

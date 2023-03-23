@@ -1,15 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Actor;
 using UnityEngine;
 
 public class ProjectileController : MonoBehaviour
 {
-    [Header("Effects")] 
-    [SerializeField] private ParticleSystem _explosionParticleSystem;
+    [Header("Effects")] [SerializeField] private ParticleSystem _explosionParticleSystem;
 
-    [Header("Settings")]
-    [SerializeField] private float _speed;
+    [Header("Settings")] [SerializeField] private float _speed;
     [SerializeField] private int _bounces;
 
     [HideInInspector] public Vector3 _direction;
@@ -48,12 +47,13 @@ public class ProjectileController : MonoBehaviour
                 SetDirection(dir);
             }
         }
-        else if (collision.gameObject.tag == "Player")
+        else if (collision.gameObject.tag == "Enemy" ||
+                 collision.gameObject.tag == "Player")
         {
             Explode();
-        }
 
-        // TODO: Collide with other tanks
+            collision.gameObject.GetComponent<BaseTankController>().Explode();
+        }
     }
 
     public void SetDirection(Vector3 dir)
