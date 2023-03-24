@@ -7,10 +7,10 @@ namespace Actor
     {
         [SerializeField] protected GameObject _projectilePrefab;
         [SerializeField] protected Transform _turretTransform;
-        [SerializeField] protected Transform _muzzleTransform;
+        [SerializeField] public Transform _muzzleTransform;
 
-        [SerializeField] protected float _moveSpeed = 1f;
-        [SerializeField] protected float _turnSpeed = 45f;
+        [SerializeField] protected float _moveSpeed = 2f;
+        [SerializeField] protected float _turnSpeed = 90f;
 
         protected Rigidbody _rb;
         protected Collider _collider;

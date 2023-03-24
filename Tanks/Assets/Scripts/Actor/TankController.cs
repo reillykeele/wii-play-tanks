@@ -1,3 +1,4 @@
+using Manager;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Util.Helpers;
@@ -30,6 +31,8 @@ namespace Actor
             if (_crosshair == null)
                 Debug.LogWarning("Cross hair is not set in the Editor.");
             #endif
+            
+            GameManager.Instance.Player = this;
         }
 
         void Start()
@@ -51,7 +54,9 @@ namespace Actor
             if (_turn != 0f)
                 gameObject.transform.Rotate(Vector3.up, _turn * _turnSpeed * Time.fixedDeltaTime);
 
-            _turretTransform.forward = new Vector3(_targetPos.x - transform.position.x, 0f, _targetPos.z - transform.position.z);
+            var forwardDir = new Vector3(_targetPos.x - transform.position.x, 0f, _targetPos.z - transform.position.z);
+            if (forwardDir != Vector3.zero)
+                _turretTransform.forward = forwardDir;
         }
 
         public void OnMove(InputValue val)

@@ -1,3 +1,4 @@
+using Actor;
 using ScriptableObject.Config;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -34,6 +35,8 @@ namespace Manager
         // TODO: Should this be elsewhere?
         [Header("Audio")]
         public AudioMixer Mixer;
+
+        [HideInInspector] public TankController Player;
 
         protected override void Awake()
         {
