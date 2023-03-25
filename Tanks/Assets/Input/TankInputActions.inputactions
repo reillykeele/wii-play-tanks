@@ -15,15 +15,6 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Rotate",
-                    "type": "Value",
-                    "id": "5a86831a-1793-44d5-894d-22f79b5253cd",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
                     "name": "Aim",
                     "type": "Value",
                     "id": "d88eb0b1-6b4c-45fa-adde-97760027cbcd",
@@ -45,7 +36,7 @@
             "bindings": [
                 {
                     "name": "2D Vector",
-                    "id": "9f99d16d-f939-428e-8830-334f7182c11a",
+                    "id": "17b82bd3-642c-4c08-a8d4-ac2e89551e6b",
                     "path": "2DVector",
                     "interactions": "",
                     "processors": "",
@@ -56,56 +47,45 @@
                 },
                 {
                     "name": "up",
-                    "id": "475eea4a-7f4f-4348-b9eb-001a12e48049",
+                    "id": "2b06ddf0-76d5-4c6b-ada2-e9affacbe47e",
                     "path": "<Keyboard>/w",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Keyboard",
+                    "groups": "",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
                 {
                     "name": "down",
-                    "id": "80f7c0d0-0543-463d-8a22-406cd9d353e4",
+                    "id": "b6029f80-23c3-484c-b029-f915d7fa6152",
                     "path": "<Keyboard>/s",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Keyboard",
+                    "groups": "",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "2D Vector",
-                    "id": "dc100906-f776-465a-9ae5-ed53a37e1d29",
-                    "path": "2DVector",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Rotate",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
                     "name": "left",
-                    "id": "28919fa1-0aee-411c-bbd2-9dd27807ad84",
+                    "id": "7c586a55-e96f-4989-a841-fcdecacdbef2",
                     "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Keyboard",
-                    "action": "Rotate",
+                    "groups": "",
+                    "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
                 {
                     "name": "right",
-                    "id": "fa9078e8-0e25-4c9d-a02d-a4ce9c742fc8",
+                    "id": "b8a202b0-f51b-4890-9fc8-2406ee26d5f6",
                     "path": "<Keyboard>/d",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Keyboard",
-                    "action": "Rotate",
+                    "groups": "",
+                    "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },

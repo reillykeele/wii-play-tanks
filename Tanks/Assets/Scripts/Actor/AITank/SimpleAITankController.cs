@@ -1,12 +1,13 @@
 using System.Collections.Generic;
 using Actor.AITank.AITankBehaviour;
+using UnityEngine;
 using Util.AI.BehaviourTree;
 
 namespace Actor.AITank
 {
     public class SimpleAITankController : AITankController
     {
-        private BTree _tankBTree;
+        protected BTree _tankBTree;
 
         public int BTreeRefreshRate = 1;
 
@@ -21,11 +22,41 @@ namespace Actor.AITank
         {
             _tankBTree = new BTree
             {
-                Root = new SequenceNode(
+                Root = new SelectorNode(
                     new List<Node>
                     {
-                        new IsPlayerInSightOfTurretNode(this),
-                        new AimAtPlayerNode(this)
+                        new SequenceNode(new List<Node>
+                        {
+                            new IsPlayerVisibleAndInVisionRangeNode(this),
+                            new AimAtPlayerNode(this),
+                            new SelectorNode(new List<Node>
+                            {
+                                new ParallelNode(new List<Node>
+                                {
+                                    new SequenceNode(new List<Node>
+                                    {
+                                        new IsPlayerInSightAndInShootingRangeNode(this),
+                                        new ShootNode(this)
+                                    }),
+                                    new SelectorNode(new List<Node>
+                                    {
+                                        new SequenceNode(new List<Node>
+                                        {
+                                            new InverterNode(new IsPlayerInMovementRangeNode(this)),
+                                            new MoveToPositionNode(this),
+                                        }),
+                                        new ClearPathNode(this)
+                                    })
+                                })
+                            })
+                        }),
+                        new SequenceNode(new List<Node>
+                        {
+                            new KnowPlayerLocationNode(this),
+                            new DebugLogNode("Know player location, moving..."),
+                            new MoveToPositionNode(this),
+                            new AimAtDestinationNode(this)
+                        })
                     })
             };
         }

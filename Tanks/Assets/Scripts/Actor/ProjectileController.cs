@@ -1,77 +1,83 @@
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
-using Actor;
 using UnityEngine;
 
-public class ProjectileController : MonoBehaviour
+namespace Actor
 {
-    [Header("Effects")] [SerializeField] private ParticleSystem _explosionParticleSystem;
-
-    [Header("Settings")] [SerializeField] private float _speed;
-    [SerializeField] private int _bounces;
-
-    [HideInInspector] public Vector3 _direction;
-
-    private int _remainingBounces;
-    // private bool _canCollideWithPlayer = false;
-
-    void Awake()
+    public class ProjectileController : MonoBehaviour
     {
-        _remainingBounces = _bounces;
-    }
+        [Header("Effects")] [SerializeField] private ParticleSystem _explosionParticleSystem;
 
-    void FixedUpdate()
-    {
-        transform.position += _direction * _speed * Time.fixedDeltaTime;
-    }
+        [Header("Settings")] [SerializeField] private float _speed;
+        [SerializeField] private int _bounces;
 
-    void OnCollisionEnter(Collision collision)
-    {
+        [HideInInspector] private GameObject _shooter;
+        [HideInInspector] private Vector3 _direction;
 
-        if (collision.gameObject.tag == "Projectile")
+        private int _remainingBounces;
+
+        void Awake()
         {
-            Explode();
+            _remainingBounces = _bounces;
         }
-        else if (collision.gameObject.tag == "Wall")
+
+        void FixedUpdate()
         {
-            if (_remainingBounces <= 0)
-                Explode();
-            else
+            transform.position += _direction * _speed * Time.fixedDeltaTime;
+        }
+
+        void OnCollisionEnter(Collision collision)
+        {
+            if (collision.gameObject.tag == "Projectile")
             {
-                _remainingBounces--;
+                Explode();
+            }
+            else if (collision.gameObject.tag == "Wall")
+            {
+                if (_remainingBounces <= 0)
+                    Explode();
+                else
+                {
+                    _remainingBounces--;
 
-                var contact = collision.contacts.First();
-                var dir = Vector3.Reflect(_direction, contact.normal);
+                    var contact = collision.contacts.First();
+                    var dir = Vector3.Reflect(_direction, contact.normal);
 
-                SetDirection(dir);
+                    SetDirection(dir);
+                }
+            }
+            else if (collision.gameObject.tag == "Enemy" ||
+                     collision.gameObject.tag == "Player")
+            {
+                // If the projectile collides with the shooter and we haven't bounced
+                // off any walls, we want to ignore the collision
+                if (collision.gameObject == _shooter && _remainingBounces == _bounces)
+                    return;
+
+                Explode();
+
+                collision.gameObject.GetComponent<BaseTankController>().Explode();
             }
         }
-        else if (collision.gameObject.tag == "Enemy" ||
-                 collision.gameObject.tag == "Player")
+
+        public void SetShooter(GameObject shooter) => _shooter = shooter;
+        
+        public void SetDirection(Vector3 dir)
         {
-            Explode();
-
-            collision.gameObject.GetComponent<BaseTankController>().Explode();
+            _direction = dir;
+            transform.forward = dir;
         }
-    }
 
-    public void SetDirection(Vector3 dir)
-    {
-        _direction = dir;
-        transform.forward = dir;
-    }
+        void Explode()
+        {
+            _explosionParticleSystem.transform.parent = null;
+            _explosionParticleSystem.Play();
 
-    void Explode()
-    {
-        _explosionParticleSystem.transform.parent = null;
-        _explosionParticleSystem.Play();
+            // TODO: Play audio effect
 
-        // TODO: Play audio effect
+            var mainModule = _explosionParticleSystem.main;
+            Destroy(_explosionParticleSystem.gameObject, mainModule.duration);
 
-        var mainModule = _explosionParticleSystem.main;
-        Destroy(_explosionParticleSystem.gameObject, mainModule.duration);
-
-        Destroy(gameObject);
+            Destroy(gameObject);
+        }
     }
 }

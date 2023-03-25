@@ -1,7 +1,7 @@
+using System;
 using Manager;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Util.Helpers;
 
 namespace Actor
 {
@@ -47,12 +47,51 @@ namespace Actor
 
         void FixedUpdate()
         {
+            var movement = new Vector3(_move, 0, _turn);
+            if (movement != Vector3.zero)
+            {
+                _rb.MovePosition(_rb.position + movement * _moveSpeed * Time.fixedDeltaTime);
 
-            if (_move != 0f)
-                _rb.MovePosition(_rb.position + transform.forward * _move * _moveSpeed * Time.fixedDeltaTime);
+                var movementDir = movement.normalized;
+                
+                var dot = Vector3.Dot(transform.forward, movementDir);
+                if (Math.Abs(Mathf.Abs(dot) - 1f) < 0.005f)
+                {
+                    // same direction
+                }
+                else if (Mathf.Abs(dot) < 0.005f)
+                {
+                    // 90 deg turn
+                    var f = movementDir;
+                    var _ = Vector3.zero;
+                    transform.forward = f; // Vector3.SmoothDamp(transform.forward, f, ref _, 0.01f);
+                }
+                else
+                {
+                    var f = Mathf.Sign(dot) * movementDir;
+                    var _ = Vector3.zero;
+                    transform.forward = f; Vector3.SmoothDamp(transform.forward, f, ref _, 0.01f);
+                }
 
-            if (_turn != 0f)
-                gameObject.transform.Rotate(Vector3.up, _turn * _turnSpeed * Time.fixedDeltaTime);
+                // else if (dot == 0.5f)
+                // {
+                //     // perpendicular
+                //     transform.forward = Vector3.Lerp(transform.forward, movement, 1f);
+                // }
+                // else
+                // {
+                //     // transform.forward = Vector3.Lerp(transform.forward, -movement, 1f);
+                // }
+            }
+
+
+            // if (_move != 0f)
+            // {
+            //     _rb.MovePosition(_rb.position + /*transform.forward * */ _move * _moveSpeed * Time.fixedDeltaTime);
+            // }
+
+            // if (_turn != 0f)
+            //     gameObject.transform.Rotate(Vector3.up, _turn * _turnSpeed * Time.fixedDeltaTime);
 
             var forwardDir = new Vector3(_targetPos.x - transform.position.x, 0f, _targetPos.z - transform.position.z);
             if (forwardDir != Vector3.zero)
@@ -63,15 +102,16 @@ namespace Actor
         {
             var dir = val.Get<Vector2>();
 
-            _move = dir.y;
+            _move = dir.x;
+            _turn = dir.y;
         }
 
-        public void OnRotate(InputValue val)
-        {
-            var dir = val.Get<Vector2>();
-
-            _turn = dir.x;
-        }
+        // public void OnRotate(InputValue val)
+        // {
+        //     var dir = val.Get<Vector2>();
+        //
+        //     _turn = dir.x;            
+        // }
 
         public void OnAim(InputValue val)
         {

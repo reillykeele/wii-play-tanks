@@ -111,6 +111,7 @@ MonoBehaviour:
   _muzzleTransform: {fileID: 4252935440432951350}
   _moveSpeed: 2
   _turnSpeed: 90
+  _fireRate: 0.5
   _crosshair: {fileID: 0}
 --- !u!1001 &295768089450466644
 PrefabInstance:
@@ -122,11 +123,11 @@ PrefabInstance:
     - target: {fileID: 5162102902497194322, guid: 6852824d568ae7041bfd16a6eeb64e96, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 052c8bbabfa1740498aec9b8ef5639fe, type: 2}
+      objectReference: {fileID: 2100000, guid: 4b0559ac5769f994a8ae1758867f18fd, type: 2}
     - target: {fileID: 5899218258720119327, guid: 6852824d568ae7041bfd16a6eeb64e96, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 052c8bbabfa1740498aec9b8ef5639fe, type: 2}
+      objectReference: {fileID: 2100000, guid: 4b0559ac5769f994a8ae1758867f18fd, type: 2}
     - target: {fileID: 6026449687839142420, guid: 6852824d568ae7041bfd16a6eeb64e96, type: 3}
       propertyPath: m_Name
       value: Tank
@@ -178,11 +179,11 @@ PrefabInstance:
     - target: {fileID: 9065258316956398805, guid: 6852824d568ae7041bfd16a6eeb64e96, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 052c8bbabfa1740498aec9b8ef5639fe, type: 2}
+      objectReference: {fileID: 2100000, guid: 4b0559ac5769f994a8ae1758867f18fd, type: 2}
     - target: {fileID: 9195653957011228511, guid: 6852824d568ae7041bfd16a6eeb64e96, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 052c8bbabfa1740498aec9b8ef5639fe, type: 2}
+      objectReference: {fileID: 2100000, guid: 4b0559ac5769f994a8ae1758867f18fd, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6852824d568ae7041bfd16a6eeb64e96, type: 3}
 --- !u!4 &6697792874325304826 stripped

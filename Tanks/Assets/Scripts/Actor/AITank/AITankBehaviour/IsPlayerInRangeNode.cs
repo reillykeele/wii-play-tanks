@@ -8,15 +8,17 @@ namespace Actor.AITank.AITankBehaviour
     public class IsPlayerInRangeNode : Node
     {
         private AITankController _tankController;
+        private float _range;
 
-        public IsPlayerInRangeNode(AITankController tankController)
+        public IsPlayerInRangeNode(AITankController tankController, float range)
         {
             _tankController = tankController;
+            _range = range;
         }
 
         public override NodeState Tick()
         {
-            var isInRange = _tankController.IsPlayerInRange();
+            var isInRange = _tankController.IsPlayerInRange(_range);
             if (isInRange)
                 return NodeState.Success;
 
