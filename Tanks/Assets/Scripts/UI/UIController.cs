@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Data.Enum;
 using UI.ButtonControllers;
 using UI.Tween;
 using Util.Helpers;

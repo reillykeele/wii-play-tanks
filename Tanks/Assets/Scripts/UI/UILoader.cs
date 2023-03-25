@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Data.Enum;
 using UnityEngine;
 using Util.Enums;
 
@@ -6,7 +7,7 @@ namespace UI
 {
     public class UILoader : MonoBehaviour
     {
-        public List<Util.Enums.UIPageType> UIToLoad;
+        public List<UIPageType> UIToLoad;
         public List<SceneType> ScenesToLoad;
 
         void Start()

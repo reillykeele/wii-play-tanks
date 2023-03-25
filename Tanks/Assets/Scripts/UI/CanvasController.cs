@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Data.Enum;
 using Manager;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -12,14 +13,14 @@ namespace UI
 {
     public class CanvasController : MonoBehaviour
     {
-        public Util.Enums.UIPageType DefaultUiPage;
+        public UIPageType DefaultUiPage;
 
         public float MinLoadingScreenTime = 0f;
 
         private List<UIController> uiControllers;
         private Hashtable uiHashtable;
 
-        private Util.Enums.UIPageType _lastActiveUiPage;
+        private UIPageType _lastActiveUiPage;
 
         void Awake()
         {
@@ -46,32 +47,32 @@ namespace UI
 
         public void ReturnToPrevious() => GetUI(_lastActiveUiPage)?.ReturnToUI();
 
-        public void EnableUI(Util.Enums.UIPageType target, bool resetOnSwitch = false, bool fadeIn = false)
+        public void EnableUI(UIPageType target, bool resetOnSwitch = false, bool fadeIn = false)
         {
-            if (target == Util.Enums.UIPageType.None) return;
+            if (target == UIPageType.None) return;
 
             GetUI(target)?.Enable(resetOnSwitch, fadeIn);
             _lastActiveUiPage = target;
         }
 
-        public IEnumerator EnableUICoroutine(Util.Enums.UIPageType target, bool resetOnSwitch = false, bool transition = true)
+        public IEnumerator EnableUICoroutine(UIPageType target, bool resetOnSwitch = false, bool transition = true)
         {
-            if (target == Util.Enums.UIPageType.None) yield break;
+            if (target == UIPageType.None) yield break;
 
             _lastActiveUiPage = target;
             yield return GetUI(target)?.EnableCoroutine(resetOnSwitch, transition);
         }
 
-        public void DisableUI(Util.Enums.UIPageType target, bool resetOnSwitch = false, bool fadeOut = false)
+        public void DisableUI(UIPageType target, bool resetOnSwitch = false, bool fadeOut = false)
         {
-            if (target == Util.Enums.UIPageType.None) return;
+            if (target == UIPageType.None) return;
 
             GetUI(target)?.Disable(resetOnSwitch, fadeOut);
         }
 
-        public IEnumerator DisableUICoroutine(Util.Enums.UIPageType target, bool resetOnSwitch = false)
+        public IEnumerator DisableUICoroutine(UIPageType target, bool resetOnSwitch = false)
         {
-            if (target == Util.Enums.UIPageType.None) yield break;
+            if (target == UIPageType.None) yield break;
 
             yield return GetUI(target)?.DisableCoroutine(resetOnSwitch);
         }
@@ -79,7 +80,7 @@ namespace UI
         public void DisplayUI(UIPageType target, bool fadeIn = false) => EnableUI(target, fadeIn: fadeIn);
         public void HideUI(UIPageType target, bool fadeOut = false) => DisableUI(target, fadeOut: fadeOut);
 
-        public void SwitchUI(Util.Enums.UIPageType target, bool resetCurrentOnSwitch = false, bool resetTargetOnSwitch = true, bool transition = true)
+        public void SwitchUI(UIPageType target, bool resetCurrentOnSwitch = false, bool resetTargetOnSwitch = true, bool transition = true)
         {
             if (_lastActiveUiPage == target) return;
 
@@ -100,7 +101,7 @@ namespace UI
             LoadingManager.Instance.LoadScene(scene);
         }
 
-        private UIController GetUI(Util.Enums.UIPageType uiPageType) => (UIController) uiHashtable[uiPageType];
+        private UIController GetUI(UIPageType uiPageType) => (UIController) uiHashtable[uiPageType];
 
         private void RegisterUIControllers(IEnumerable<UIController> controllers)
         {
@@ -111,7 +112,7 @@ namespace UI
             }
         }
 
-        private bool UIExists(Util.Enums.UIPageType uiPageType) => uiHashtable.ContainsKey(uiPageType);
+        private bool UIExists(UIPageType uiPageType) => uiHashtable.ContainsKey(uiPageType);
 
         IEnumerator LoadingScreen(SceneType scene)
         {

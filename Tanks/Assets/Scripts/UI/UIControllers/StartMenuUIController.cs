@@ -1,3 +1,4 @@
+using Data.Enum;
 using Manager;
 using UnityEngine.InputSystem;
 using Util.Enums;
@@ -6,7 +7,7 @@ namespace UI.UIControllers
 {
     public class StartMenuUIController : UIController
     {
-        public Util.Enums.UIPageType TargetUiPageType = Util.Enums.UIPageType.MainMenu;
+        public UIPageType TargetUiPageType = UIPageType.MainMenu;
 
         protected override void Awake()
         {

@@ -1,3 +1,4 @@
+using Data.Enum;
 using Util.Enums;
 
 namespace UI.UIControllers

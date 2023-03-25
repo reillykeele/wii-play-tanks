@@ -1,3 +1,4 @@
+using Data.Enum;
 using Util.Coroutine;
 using Util.Enums;
 

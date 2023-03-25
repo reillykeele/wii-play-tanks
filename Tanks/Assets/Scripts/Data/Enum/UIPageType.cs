@@ -1,4 +1,4 @@
-namespace Util.Enums
+namespace Data.Enum
 {
     public enum UIPageType
     {
@@ -9,11 +9,7 @@ namespace Util.Enums
         SettingsMenu = 4,
         LoadingScreen = 5, // Scene Transitions
         LoadingScreen2 = 6, // ?
-        ModeSelect = 7,
-        CharacterSelect = 8,
-        KartSelect = 9,
-        MapSelect = 10,
+        LevelSelect = 10,
         PauseMenu = 11,
-        FinishRace = 12
     }
 }

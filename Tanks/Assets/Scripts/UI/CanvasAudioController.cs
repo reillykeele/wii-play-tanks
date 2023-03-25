@@ -26,9 +26,9 @@ public class CanvasAudioController : MonoBehaviour
 
     void Awake()
     {
-        _backgroundAudioSource = BackgroundLoopingMusicAudioData?.LoopingMusicAudioData.CreateNewAudioSource(gameObject) ??
-                                 BackgroundAudioData?.AudioData.CreateNewAudioSource(gameObject);
-        _uiAudioSource = AudioData.FirstOrDefault(x => x != null)?.AudioData.CreateNewAudioSource(gameObject);
+        _backgroundAudioSource = BackgroundLoopingMusicAudioData?.LoopingMusicAudioData?.CreateNewAudioSource(gameObject) ??
+                                 BackgroundAudioData?.AudioData?.CreateNewAudioSource(gameObject);
+        _uiAudioSource = AudioData?.FirstOrDefault(x => x != null)?.AudioData.CreateNewAudioSource(gameObject);
     }
 
     void Start()

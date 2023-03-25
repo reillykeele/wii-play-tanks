@@ -1,4 +1,5 @@
 using System.Collections;
+using Data.Enum;
 using UI;
 using UnityEngine;
 using UnityEngine.Events;
