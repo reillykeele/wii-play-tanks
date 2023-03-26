@@ -7,7 +7,10 @@ namespace Data.Enum
         Game = 2,
 
         // Levels
-        TestWorld = 3,
+        TestWorld1 = 3,
         TestWorld2 = 4,
+        TestWorld3 = 5,
+        TestWorld4 = 6,
+        TestWorld5 = 7,
     }
 }
