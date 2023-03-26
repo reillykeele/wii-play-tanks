@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/Scenes/UI/Loading.unity
     guid: 05e1b530047a8714e96c7fa4922a92c3
   - enabled: 1
+    path: Assets/Scenes/UI/HUD.unity
+    guid: e8303901161a1644186b6de5a77a6ccd
+  - enabled: 1
     path: Assets/Scenes/Levels/Test Levels/TestWorld.unity
     guid: 3232bc04af984924d9f83a89dce7634b
   - enabled: 1

@@ -1,4 +1,6 @@
+using System;
 using Actor;
+using Data.Enum;
 using ScriptableObject.Config;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -21,7 +23,7 @@ namespace Manager
         [Header("Game State")]
         public UnityEvent OnPauseGameEvent;
         public UnityEvent OnResumeGameEvent;
-        private GameState _currentGameState;
+        private GameState _currentGameState = GameState.Playing;
         public GameState CurrentGameState
         {
             get => _currentGameState;
@@ -35,8 +37,6 @@ namespace Manager
         // TODO: Should this be elsewhere?
         [Header("Audio")]
         public AudioMixer Mixer;
-
-        [HideInInspector] public TankController Player;
 
         protected override void Awake()
         {
@@ -81,5 +81,10 @@ namespace Manager
                 Application.Quit(0);
 #endif
         }
+
+
+        // Game-specific logic
+        [HideInInspector] public TankController Player;
+
     }
 }

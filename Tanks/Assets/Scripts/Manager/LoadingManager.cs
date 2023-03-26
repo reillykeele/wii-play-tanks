@@ -47,6 +47,46 @@ namespace Manager
             );
         }
 
+        /// <summary>
+        /// Unloads the active scene and loads the <c>toScene</c> scene, setting it to active.
+        /// </summary>
+        /// <param name="toScene">The scene to load in.</param>
+        public void TransitionScene(SceneType toScene)
+        {
+            // Unload the active scene
+            var unloadOp = SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
+
+            // Load the next scene
+            unloadOp.completed += (op) =>
+            {
+                var loadOp = SceneManager.LoadSceneAsync(toScene.ToString(), LoadSceneMode.Additive);
+                loadOp.completed += (o2) => SceneManager.SetActiveScene(SceneManager.GetSceneByName(toScene.ToString()));
+            };
+        }
+
+        /// <summary>
+        ///  Unloads the <c>fromScene</c> scene and loads the <c>toScene</c> scene, setting it to active.
+        /// </summary>
+        /// <param name="fromScene">The scene to unload.</param>
+        /// <param name="toScene">The scene to load in.</param>
+        public void TransitionScene(SceneType fromScene, SceneType toScene)
+        {
+            // Unload the current level
+            var unloadOp = SceneManager.UnloadSceneAsync(fromScene.ToString());
+
+            // Load the next level
+            unloadOp.completed += (op) =>
+            {
+                var loadOp = SceneManager.LoadSceneAsync(toScene.ToString(), LoadSceneMode.Additive);
+                loadOp.completed += (o2) => SceneManager.SetActiveScene(SceneManager.GetSceneByName(toScene.ToString()));
+            };
+        }
+
+        /// <summary>
+        /// Unloads all currently loaded scenes to load in the specified scene. Displays a loading screen while
+        /// loading in the new scene.
+        /// </summary>
+        /// <param name="scene">The scene to load in.</param>
         public void LoadScene(SceneType scene)
         {
             StartCoroutine(CoroutineUtil.Sequence(
@@ -71,21 +111,14 @@ namespace Manager
 
             var minEndTime = Time.time + MinLoadingScreenTime;
             var result = SceneManager.LoadSceneAsync(scene.ToString());
+            result.completed += (op) => SceneManager.SetActiveScene(SceneManager.GetSceneByName(scene.ToString()));
+
+            // wait
             while (result.isDone == false || Time.time <= minEndTime)
             {
                 yield return null;
             }
         }
 
-        // public void LoadUI(string uiSceneName)
-        // {
-        //     if (SceneManager.GetSceneByName(uiSceneName).isLoaded == false)
-        //         StartCoroutine()
-        // }
-        //
-        // private IEnumerator LoadUICoroutine(string uiSceneName)
-        // {
-        //
-        // }
     }
 }

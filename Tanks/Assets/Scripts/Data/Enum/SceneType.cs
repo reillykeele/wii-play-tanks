@@ -4,7 +4,7 @@ namespace Data.Enum
     {
         None = 0,
         Menu = 1,
-        Game = 2,
+        HUD = 2,
 
         // Levels
         TestWorld1 = 3,

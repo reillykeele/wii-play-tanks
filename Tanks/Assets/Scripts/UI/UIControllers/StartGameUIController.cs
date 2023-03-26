@@ -5,7 +5,7 @@ namespace UI.UIControllers
 {
     public class StartGameUIController : UIController
     {
-        public SceneType TargetScene = SceneType.Game;
+        public SceneType TargetScene; // = SceneType.Game;
 
         public void OnClick()
         {

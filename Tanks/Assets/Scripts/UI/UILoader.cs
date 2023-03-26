@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Data.Enum;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Util.Enums;
 
 namespace UI
@@ -17,12 +18,12 @@ namespace UI
             //     if (SceneManager.GetSceneByName(ui.ToString()).isLoaded == false)
             //         SceneManager.LoadSceneAsync(ui.ToString(), LoadSceneMode.Additive);
             // }
-            //
-            // foreach (var scene in ScenesToLoad)
-            // {
-            //     if (SceneManager.GetSceneByName(scene.ToString()).isLoaded == false)
-            //         SceneManager.LoadSceneAsync(scene.ToString(), LoadSceneMode.Additive);
-            // }
+            
+            foreach (var scene in ScenesToLoad)
+            {
+                if (SceneManager.GetSceneByName(scene.ToString()).isLoaded == false)
+                    SceneManager.LoadSceneAsync(scene.ToString(), LoadSceneMode.Additive);
+            }
         }
     }
 }

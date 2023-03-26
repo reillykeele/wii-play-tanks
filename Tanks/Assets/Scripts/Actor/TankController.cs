@@ -2,6 +2,7 @@ using System;
 using Manager;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Util.Helpers;
 
 namespace Actor
 {
@@ -33,6 +34,8 @@ namespace Actor
             #endif
             
             GameManager.Instance.Player = this;
+            GameManager.Instance.OnPauseGameEvent.AddListener(OnPause);
+            GameManager.Instance.OnResumeGameEvent.AddListener(OnResume);
         }
 
         void Start()
@@ -42,7 +45,10 @@ namespace Actor
 
         void Update()
         {
-            // Debug.DrawLine(transform.position, _targetPos);
+            if (Keyboard.current?.escapeKey.wasPressedThisFrame == true)
+            {
+                GameManager.Instance.PauseGame();
+            }
         }
 
         void FixedUpdate()
@@ -125,8 +131,19 @@ namespace Actor
         public void OnShoot(InputValue val)
         {
             if (val.isPressed == false) return;
+            if (GameManager.Instance.IsPaused()) return;
 
             Shoot();
+        }
+
+        public void OnPause()
+        {
+            _crosshair.gameObject.Disable();
+        }
+
+        public void OnResume()
+        {
+            _crosshair.gameObject.Enable();
         }
 
         public override void Explode()

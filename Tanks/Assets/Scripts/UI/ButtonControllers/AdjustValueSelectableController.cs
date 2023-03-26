@@ -21,7 +21,7 @@ namespace UI.ButtonControllers
 
         void Update()
         {
-            if (EventSystem.current.currentSelectedGameObject == gameObject)
+            if (EventSystem.current?.currentSelectedGameObject == gameObject)
             {
                 bool updated = false;
 
