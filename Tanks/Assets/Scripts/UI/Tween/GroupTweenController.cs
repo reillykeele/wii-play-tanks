@@ -8,6 +8,7 @@ namespace UI.Tween
     {
         private IEnumerable<BaseTween> _tweens;
 
+        [Header("Group Tween")]
         [SerializeField] private float _delay = 0f;
         [SerializeField] private float _delayBetweenElements = 0f;
         

@@ -8,7 +8,7 @@ namespace UI.Tween
     [RequireComponent(typeof(Image))]
     public class FadeImageTween : BaseTween
     {
-        [Header("Move Tween")]
+        [Header("Fade Image Tween")]
         [SerializeField] private float _fadeFrom = 0f;
         [SerializeField] private float _fadeTo = 1f;
 
