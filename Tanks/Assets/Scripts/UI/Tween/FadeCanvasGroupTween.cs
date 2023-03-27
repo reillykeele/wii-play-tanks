@@ -8,11 +8,12 @@ namespace UI.Tween
     [RequireComponent(typeof(CanvasGroup))]
     public class FadeCanvasGroupTween : BaseTween
     {
-        [Header("Move Tween")]
+        [Header("Fade Canvas Group Tween")]
         [SerializeField] private float _fadeFrom = 0f;
         [SerializeField] private float _fadeTo = 1f;
 
         [SerializeField] private LeanTweenType _easeType = LeanTweenType.notUsed;
+        [SerializeField] private bool _reverseOnOut = true;
 
         private CanvasGroup _canvasGroup;
 
@@ -20,6 +21,14 @@ namespace UI.Tween
         {
             base.Awake();
             _canvasGroup = GetComponent<CanvasGroup>();
+        }
+
+        public override void Reset()
+        {
+            if (ShouldTweenIn() || _reverseOnOut)
+                _canvasGroup.alpha = _fadeTo;
+            else if (ShouldTweenOut())
+                _canvasGroup.alpha = _fadeFrom;
         }
 
         public override void Tween()
@@ -36,6 +45,12 @@ namespace UI.Tween
         {
             if (_tweenDirection != TweenDirection.Out && _tweenDirection != TweenDirection.InAndOut)
                 return;
+
+            if (!_reverseOnOut)
+            {
+                Tween();
+                return;
+            }
 
             _canvasGroup.alpha = _fadeTo;
             LeanTween.value(gameObject, _fadeTo, _fadeFrom, _duration)

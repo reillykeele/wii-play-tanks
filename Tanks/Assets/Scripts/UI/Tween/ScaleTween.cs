@@ -12,7 +12,15 @@ namespace UI.Tween
         [SerializeField] private LeanTweenType _easeType = LeanTweenType.notUsed;
         [SerializeField] private bool _reverseOnOut = true;
 
-        
+
+        public override void Reset()
+        {
+            if (ShouldTweenIn() || _reverseOnOut)
+                _rectTransform.localScale = _scaleTo;
+            else if (ShouldTweenOut())
+                _rectTransform.localScale = _scaleFrom;
+        }
+
         public override void Tween()
         {
             _rectTransform.localScale = _scaleFrom;

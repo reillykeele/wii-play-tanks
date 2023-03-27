@@ -13,6 +13,7 @@ namespace UI.Tween
         [SerializeField] private float _fadeTo = 1f;
 
         [SerializeField] private LeanTweenType _easeType = LeanTweenType.notUsed;
+        [SerializeField] private bool _reverseOnOut = true;
 
         private Image _image;
 
@@ -20,6 +21,14 @@ namespace UI.Tween
         {
             base.Awake();
             _image = GetComponent<Image>();
+        }
+
+        public override void Reset()
+        {
+            if (ShouldTweenIn() || _reverseOnOut)
+                _image.color = new Color(_image.color.r, _image.color.g, _image.color.b, _fadeTo);
+            else if (ShouldTweenOut())
+                _image.color = new Color(_image.color.r, _image.color.g, _image.color.b, _fadeFrom);
         }
 
         public override void Tween()
@@ -36,6 +45,12 @@ namespace UI.Tween
         {
             if (ShouldTweenOut() == false)
                 return;
+
+            if (!_reverseOnOut)
+            {
+                Tween();
+                return;
+            }
 
             _image.color = new Color(_image.color.r, _image.color.g, _image.color.b, _fadeTo);
             LeanTween.value(gameObject, _fadeTo, _fadeFrom, _duration)

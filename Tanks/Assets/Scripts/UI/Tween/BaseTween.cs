@@ -58,6 +58,8 @@ namespace UI.Tween
                 TweenIn();
         }
 
+        public abstract void Reset();
+
         public abstract void Tween();
         public virtual void TweenIn()
         {

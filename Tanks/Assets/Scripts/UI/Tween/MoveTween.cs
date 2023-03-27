@@ -11,6 +11,14 @@ namespace UI.Tween
         [SerializeField] private LeanTweenType _easeType = LeanTweenType.notUsed;
         [SerializeField] private bool _reverseOnOut = true;
 
+        public override void Reset()
+        {
+            if (ShouldTweenIn() || _reverseOnOut)
+                _rectTransform.anchoredPosition = _moveTo;
+            else if (ShouldTweenOut())
+                _rectTransform.anchoredPosition = _moveFrom;
+        }
+
         public override void Tween()
         {
             _rectTransform.anchoredPosition = _moveFrom;
