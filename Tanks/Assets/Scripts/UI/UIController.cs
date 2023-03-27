@@ -86,8 +86,13 @@ namespace UI
 
 
             if (transition)
-                foreach (var tween in _tweens.Where(x =>/* x.gameObject.activeInHierarchy && */ x.ShouldTweenInOnEnable() == false && x.ShouldTweenIn()))
-                    tween.TweenIn();
+                foreach (var tween in _tweens)
+                {
+                    if (tween.ShouldTweenInOnEnable() == false && tween.ShouldTweenIn())
+                        tween.TweenIn();
+                    else
+                        tween.Reset();
+                }
 
             gameObject.Enable();
 

@@ -62,6 +62,13 @@ namespace Actor.AITank
             base.Shoot();
         }
 
+        public override void Explode()
+        {
+            base.Explode();
+
+            LevelManager.Instance.RemainingTanks--;
+        }
+
         /// <summary>
         /// Rotates the turret to aim in a specified direction.
         /// </summary>
@@ -119,7 +126,7 @@ namespace Actor.AITank
         /// </summary>
         public bool IsPlayerVisible()
         {
-            var player = GameManager.Instance.Player;
+            var player = LevelManager.Instance.Player;
 
             var dirToPlayer = (player.transform.position - _turretTransform.position).normalized;
             Physics.Raycast(_turretTransform.position, dirToPlayer, out var hitInfo);
@@ -138,7 +145,7 @@ namespace Actor.AITank
         /// </summary>
         public bool IsPlayerInSight()
         {
-            var player = GameManager.Instance.Player;
+            var player = LevelManager.Instance.Player;
 
             // Check the angle between the player and the AI tank
             var dirToPlayer = (player.transform.position - _turretTransform.position).normalized;
@@ -165,7 +172,7 @@ namespace Actor.AITank
         /// </summary>
         public bool IsPlayerInRange(float range)
         {
-            var player = GameManager.Instance.Player;
+            var player = LevelManager.Instance.Player;
 
             var dist = Vector3.Distance(transform.position, player.transform.position);
 
@@ -184,7 +191,7 @@ namespace Actor.AITank
         /// </summary>
         public bool IsPlayerVisibleAndInRange(float range)
         {
-            var player = GameManager.Instance.Player;
+            var player = LevelManager.Instance.Player;
 
             var dirToPlayer = (player.transform.position - _turretTransform.position).normalized;
             Physics.Raycast(_turretTransform.position, dirToPlayer, out var hitInfo);
@@ -209,7 +216,7 @@ namespace Actor.AITank
         /// </summary>
         public bool IsPlayerInSightAndInRange(float range)
         {
-            var player = GameManager.Instance.Player;
+            var player = LevelManager.Instance.Player;
 
             // Check the angle between the player and the AI tank
             var dirToPlayer = (player.transform.position - _turretTransform.position).normalized;

@@ -15,6 +15,8 @@ namespace UI.UIControllers
         {
             GameManager.Instance.OnPauseGameEvent.AddListener(PauseGame);
             GameManager.Instance.OnResumeGameEvent.AddListener(ResumeGame);
+            GameManager.Instance.LevelClearEvent.AddListener(DisplayLevelClear);
+            GameManager.Instance.TransitionLevelEvent.AddListener(DisplayLevelTransition);
         }
 
         void Update()
@@ -31,6 +33,16 @@ namespace UI.UIControllers
         public void ResumeGame()
         {
             
+        }
+
+        public void DisplayLevelClear()
+        {
+            _canvasController.SwitchUI(UIPageType.MissionClearScreen);
+        }
+
+        public void DisplayLevelTransition()
+        {
+            _canvasController.SwitchUI(UIPageType.MissionScreen);
         }
     }
 }

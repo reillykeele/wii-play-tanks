@@ -14,7 +14,7 @@ namespace Actor.AITank.AITankBehaviour
 
         public override NodeState Tick()
         {
-            var player = GameManager.Instance.Player;
+            var player = LevelManager.Instance.Player;
 
             _tankController.AimAtPosition(player.transform.position);
 

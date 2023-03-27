@@ -11,5 +11,7 @@ namespace Data.Enum
         LoadingScreen2 = 6, // ?
         LevelSelect = 10,
         PauseMenu = 11,
+        MissionScreen = 12,
+        MissionClearScreen = 13,
     }
 }

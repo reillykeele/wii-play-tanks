@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using Util.Coroutine;
 using Util.Enums;
 using Util.Singleton;
 
@@ -84,7 +85,25 @@ namespace Manager
 
 
         // Game-specific logic
-        [HideInInspector] public TankController Player;
+        public UnityEvent LevelClearEvent = new UnityEvent();
+        public void LevelClear(SceneType nextLevel)
+        {
+            StartCoroutine(CoroutineUtil.Sequence(
+                CoroutineUtil.CallAction(() => LevelClearEvent.Invoke()),
+                CoroutineUtil.Wait(5),
+                CoroutineUtil.CallAction(() => TransitionLevel(nextLevel))
+            ));
+        }
+
+        public UnityEvent TransitionLevelEvent = new UnityEvent();
+        public void TransitionLevel(SceneType nextlevel)
+        {
+            StartCoroutine(CoroutineUtil.Sequence(
+                CoroutineUtil.CallAction(() => TransitionLevelEvent.Invoke()),
+                CoroutineUtil.Wait(1),
+                CoroutineUtil.CallAction(() => LoadingManager.Instance.TransitionScene(nextlevel))
+            ));
+        }
 
     }
 }
