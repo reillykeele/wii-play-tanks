@@ -6,8 +6,13 @@ namespace Util.Coroutine
 {
     public static class CoroutineUtil
     {
+        public static IEnumerator Wait(float delay)
+        {
+            yield return new WaitForSecondsRealtime(delay);
+        }
+
         public static IEnumerator WaitForExecute(Action action, float delay) {
-            yield return new WaitForSeconds(delay);
+            yield return new WaitForSecondsRealtime(delay);
             action();
         }
 
