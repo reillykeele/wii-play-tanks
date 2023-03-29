@@ -54,7 +54,7 @@ namespace Manager
             if (Keyboard.current?.numpadEnterKey.wasPressedThisFrame == true)
             {
                 // transition to the next level
-                GameManager.Instance.TransitionLevel(NextLevelData.SceneType);
+                GameManager.Instance.TransitionLevel(NextLevelData);
             }
             #endif
         }

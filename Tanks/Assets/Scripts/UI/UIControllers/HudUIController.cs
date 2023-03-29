@@ -24,8 +24,8 @@ namespace UI.UIControllers
         {
             GameManager.Instance.OnPauseGameEvent.AddListener(PauseGame);
             GameManager.Instance.OnResumeGameEvent.AddListener(ResumeGame);
-            GameManager.Instance.LevelClearEvent.AddListener(DisplayLevelClear);
-            GameManager.Instance.TransitionLevelEvent.AddListener(DisplayLevelTransition);
+            GameManager.Instance.LevelClearEvent.AddListener(DisplayMissionClear);
+            GameManager.Instance.TransitionLevelEvent.AddListener(DisplayMissionBanner);
         }
 
         void Update()
@@ -44,16 +44,16 @@ namespace UI.UIControllers
             
         }
 
-        public void DisplayLevelClear(LevelData levelData)
+        public void DisplayMissionClear()
+        {
+            _canvasController.SwitchUI(UIPageType.MissionClearScreen);
+        }
+
+        public void DisplayMissionBanner(LevelData levelData)
         {
             _missionText.text = $"Mission {levelData.LevelName}";
             _tankCountText.text = $"Enemy Tanks: {levelData.NumTanks}";
 
-            _canvasController.SwitchUI(UIPageType.MissionClearScreen);
-        }
-
-        public void DisplayLevelTransition()
-        {
             _canvasController.SwitchUI(UIPageType.MissionScreen);
         }
     }

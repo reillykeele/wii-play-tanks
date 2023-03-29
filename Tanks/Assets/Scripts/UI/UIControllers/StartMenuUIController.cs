@@ -13,7 +13,7 @@ namespace UI.UIControllers
         {
             base.Awake();
 
-            GameManager.Instance.CurrentGameState = GameState.Menu;
+            // GameManager.Instance.CurrentGameState = GameState.Menu;
         }
 
         void Update()

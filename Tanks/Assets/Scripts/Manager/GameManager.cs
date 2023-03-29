@@ -86,23 +86,34 @@ namespace Manager
 
         // Game-specific logic
         // TODO: Figure out a better place or system to do this
-        public UnityEvent<LevelData> LevelClearEvent = new UnityEvent<LevelData>();
-        public void LevelClear(LevelData nextLevel)
+        public void LoadLevel(LevelData level)
         {
             StartCoroutine(CoroutineUtil.Sequence(
-                CoroutineUtil.CallAction(() => LevelClearEvent.Invoke(nextLevel)),
-                CoroutineUtil.Wait(5),
-                CoroutineUtil.CallAction(() => TransitionLevel(nextLevel.SceneType))
+                LoadingManager.Instance.LoadSceneCoroutine(level.SceneType, true),
+                CoroutineUtil.CallAction(() => TransitionLevelEvent.Invoke(level)),
+                CoroutineUtil.Wait(0.5f), // TODO This is really janky...
+                LoadingManager.Instance.SetLoading(false),
+                CoroutineUtil.CallAction(() => CurrentGameState = GameState.Playing)
             ));
         }
 
-        public UnityEvent TransitionLevelEvent = new UnityEvent();
-        public void TransitionLevel(SceneType nextlevel)
+        public UnityEvent LevelClearEvent = new UnityEvent();
+        public void LevelClear(LevelData nextLevel)
         {
             StartCoroutine(CoroutineUtil.Sequence(
-                CoroutineUtil.CallAction(() => TransitionLevelEvent.Invoke()),
+                CoroutineUtil.CallAction(() => LevelClearEvent.Invoke()),
+                CoroutineUtil.Wait(5),
+                CoroutineUtil.CallAction(() => TransitionLevel(nextLevel))
+            ));
+        }
+
+        public UnityEvent<LevelData> TransitionLevelEvent = new UnityEvent<LevelData>();
+        public void TransitionLevel(LevelData nextLevel)
+        {
+            StartCoroutine(CoroutineUtil.Sequence(
+                CoroutineUtil.CallAction(() => TransitionLevelEvent.Invoke(nextLevel)),
                 CoroutineUtil.Wait(1),
-                CoroutineUtil.CallAction(() => LoadingManager.Instance.TransitionScene(nextlevel))
+                CoroutineUtil.CallAction(() => LoadingManager.Instance.TransitionScene(nextLevel.SceneType))
             ));
         }
 

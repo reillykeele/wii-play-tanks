@@ -89,20 +89,36 @@ namespace Manager
         /// <param name="scene">The scene to load in.</param>
         public void LoadScene(SceneType scene)
         {
-            StartCoroutine(CoroutineUtil.Sequence(
-                SetLoading(true),
-                UIHelper.FadeInAndEnable(_uiController, _loadingCanvasGroup),
-                LoadingScreen(scene),
-                UIHelper.FadeOutAndDisable(_uiController, _loadingCanvasGroup),
-                SetLoading(false),
-                CoroutineUtil.CallAction(() => OnSceneLoadedEvent.Invoke()))
-            );
+            StartCoroutine(LoadSceneCoroutine(scene));
         }
 
-        private IEnumerator SetLoading(bool isLoading)
+        /// <summary>
+        /// Unloads all currently loaded scenes to load in the specified scene. Displays a loading screen while
+        /// loading in the new scene.
+        /// </summary>
+        /// <param name="scene">The scene to load in.</param>
+        /// <returns></returns>
+        public IEnumerator LoadSceneCoroutine(SceneType scene, bool manuallyEndLoading = false)
         {
-            IsLoading = isLoading;
-            yield break;
+            return CoroutineUtil.Sequence(
+                SetLoading(true),
+                LoadingScreen(scene),
+                SetLoading(manuallyEndLoading),
+                CoroutineUtil.CallAction(() => OnSceneLoadedEvent.Invoke()));
+        }
+
+        public IEnumerator SetLoading(bool value)
+        {
+            if (value == true && !IsLoading)
+            {
+                IsLoading = true;
+                yield return UIHelper.FadeInAndEnable(_uiController, _loadingCanvasGroup);
+            }
+            else if (value == false)
+            {
+                IsLoading = false;
+                yield return UIHelper.FadeOutAndDisable(_uiController, _loadingCanvasGroup);
+            }
         }
 
         private IEnumerator LoadingScreen(SceneType scene)

@@ -1630,6 +1630,7 @@ MonoBehaviour:
   _fadeFrom: 0
   _fadeTo: 1
   _easeType: 0
+  _reverseOnOut: 1
 --- !u!225 &719832826
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -2855,11 +2856,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1307648775}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 724fb5f1d8538e148a64c9dd84320bc4, type: 3}
+  m_Script: {fileID: 11500000, guid: 1a56cce8e371645429097e02cc8e9966, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TargetScene: 4
-  Delay: 0
+  LevelData: {fileID: 11400000, guid: f0c3c7e680200314199eee16f57e3ea9, type: 2}
 --- !u!114 &1307648778
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3534,11 +3534,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1457653174}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 724fb5f1d8538e148a64c9dd84320bc4, type: 3}
+  m_Script: {fileID: 11500000, guid: 1a56cce8e371645429097e02cc8e9966, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TargetScene: 3
-  Delay: 0
+  LevelData: {fileID: 11400000, guid: 0be52403a0ce1f9438a2c2ac4c580051, type: 2}
 --- !u!1 &1464967025
 GameObject:
   m_ObjectHideFlags: 0
@@ -3806,11 +3805,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1592747646}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 724fb5f1d8538e148a64c9dd84320bc4, type: 3}
+  m_Script: {fileID: 11500000, guid: 1a56cce8e371645429097e02cc8e9966, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TargetScene: 6
-  Delay: 0
+  LevelData: {fileID: 11400000, guid: 7ec631b6d57e4da48b0444f101ed983a, type: 2}
 --- !u!114 &1592747649
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4332,11 +4330,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1676600291}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 724fb5f1d8538e148a64c9dd84320bc4, type: 3}
+  m_Script: {fileID: 11500000, guid: 1a56cce8e371645429097e02cc8e9966, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TargetScene: 5
-  Delay: 0
+  LevelData: {fileID: 11400000, guid: ebf93c881be1f3f4b855855305ef2f32, type: 2}
 --- !u!114 &1676600294
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5400,6 +5397,7 @@ MonoBehaviour:
   _fadeFrom: 0
   _fadeTo: 0.5
   _easeType: 0
+  _reverseOnOut: 1
 --- !u!1001 &1757417991
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5520,11 +5518,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1757417993}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 724fb5f1d8538e148a64c9dd84320bc4, type: 3}
+  m_Script: {fileID: 11500000, guid: 1a56cce8e371645429097e02cc8e9966, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TargetScene: 3
-  Delay: 0
+  LevelData: {fileID: 11400000, guid: 0be52403a0ce1f9438a2c2ac4c580051, type: 2}
 --- !u!1 &1775058576
 GameObject:
   m_ObjectHideFlags: 0
@@ -5882,7 +5879,12 @@ MonoBehaviour:
       m_Calls: []
   GameMode: 0
   Mixer: {fileID: 24100000, guid: 0f43cfc974ed69f4dbe6a3ff79496708, type: 2}
-  Player: {fileID: 0}
+  LevelClearEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  TransitionLevelEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1871723509
 GameObject:
   m_ObjectHideFlags: 0
@@ -6232,11 +6234,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1971349970}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 724fb5f1d8538e148a64c9dd84320bc4, type: 3}
+  m_Script: {fileID: 11500000, guid: 1a56cce8e371645429097e02cc8e9966, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TargetScene: 7
-  Delay: 0
+  LevelData: {fileID: 11400000, guid: ca713547cda28fa49938bb627cdced38, type: 2}
 --- !u!114 &1971349973
 MonoBehaviour:
   m_ObjectHideFlags: 0
