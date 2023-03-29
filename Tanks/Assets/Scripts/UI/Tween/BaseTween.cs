@@ -54,8 +54,12 @@ namespace UI.Tween
 
         protected virtual void OnEnable()
         {
+            Reset();
+
             if (_tweenInOnEnable)
+            {
                 TweenIn();
+            }
         }
 
         public abstract void Reset();

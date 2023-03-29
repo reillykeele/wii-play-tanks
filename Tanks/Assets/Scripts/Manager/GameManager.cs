@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Actor;
 using Data;
 using Data.Enum;
@@ -86,6 +87,14 @@ namespace Manager
 
         // Game-specific logic
         // TODO: Figure out a better place or system to do this
+        
+        public UnityEvent LevelStartEvent = new UnityEvent();
+        public IEnumerator StartLevelCoroutine() => CoroutineUtil.Sequence(
+                CoroutineUtil.Wait(7),
+                CoroutineUtil.CallAction(() => LevelStartEvent.Invoke()),
+                CoroutineUtil.CallAction(() => CurrentGameState = GameState.Playing)
+            );
+
         public void LoadLevel(LevelData level)
         {
             StartCoroutine(CoroutineUtil.Sequence(
@@ -93,7 +102,7 @@ namespace Manager
                 CoroutineUtil.CallAction(() => TransitionLevelEvent.Invoke(level)),
                 CoroutineUtil.Wait(0.5f), // TODO This is really janky...
                 LoadingManager.Instance.SetLoading(false),
-                CoroutineUtil.CallAction(() => CurrentGameState = GameState.Playing)
+                StartLevelCoroutine()
             ));
         }
 
@@ -113,9 +122,11 @@ namespace Manager
             StartCoroutine(CoroutineUtil.Sequence(
                 CoroutineUtil.CallAction(() => TransitionLevelEvent.Invoke(nextLevel)),
                 CoroutineUtil.Wait(1),
-                CoroutineUtil.CallAction(() => LoadingManager.Instance.TransitionScene(nextLevel.SceneType))
+                CoroutineUtil.CallAction(() => LoadingManager.Instance.TransitionScene(nextLevel.SceneType)),
+                StartLevelCoroutine()
             ));
         }
 
+        
     }
 }

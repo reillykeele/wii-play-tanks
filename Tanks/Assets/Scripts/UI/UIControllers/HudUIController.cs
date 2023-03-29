@@ -8,12 +8,16 @@ namespace UI.UIControllers
 {
     public class HudUIController : UIController
     {
+        private TextMeshProUGUI _startText;
+
         private TextMeshProUGUI _missionText;
         private TextMeshProUGUI _tankCountText;
 
         protected override void Awake()
         {
             base.Awake();
+
+            _startText = gameObject.GetChildObject("StartText").GetComponent<TextMeshProUGUI>();
 
             var levelClearBanner= transform.parent.GetChildObject("LevelTransition").GetChildObject("MissionBanner");
             _missionText = levelClearBanner.GetChildObject("MissionText").GetComponent<TextMeshProUGUI>();
@@ -24,6 +28,7 @@ namespace UI.UIControllers
         {
             GameManager.Instance.OnPauseGameEvent.AddListener(PauseGame);
             GameManager.Instance.OnResumeGameEvent.AddListener(ResumeGame);
+            GameManager.Instance.LevelStartEvent.AddListener(DisplayStart);
             GameManager.Instance.LevelClearEvent.AddListener(DisplayMissionClear);
             GameManager.Instance.TransitionLevelEvent.AddListener(DisplayMissionBanner);
         }
@@ -42,6 +47,11 @@ namespace UI.UIControllers
         public void ResumeGame()
         {
             
+        }
+
+        public void DisplayStart()
+        {
+            _startText.gameObject.Enable();
         }
 
         public void DisplayMissionClear()
