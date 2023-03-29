@@ -110,7 +110,7 @@ MonoBehaviour:
   _turretTransform: {fileID: 4566682423986151228}
   _muzzleTransform: {fileID: 4252935440432951350}
   _moveSpeed: 2
-  _turnSpeed: 90
+  _turnSpeed: 9.42
   _fireRate: 0.5
   _crosshair: {fileID: 0}
 --- !u!1001 &295768089450466644

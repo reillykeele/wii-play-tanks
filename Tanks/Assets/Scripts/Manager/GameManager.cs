@@ -1,5 +1,6 @@
 using System;
 using Actor;
+using Data;
 using Data.Enum;
 using ScriptableObject.Config;
 using UnityEngine;
@@ -76,22 +77,22 @@ namespace Manager
 
         public void Quit()
         {
-#if UNITY_EDITOR
+            #if UNITY_EDITOR
             EditorApplication.isPlaying = false;
-#else
-                Application.Quit(0);
-#endif
+            #else
+            Application.Quit(0);
+            #endif
         }
 
-
         // Game-specific logic
-        public UnityEvent LevelClearEvent = new UnityEvent();
-        public void LevelClear(SceneType nextLevel)
+        // TODO: Figure out a better place or system to do this
+        public UnityEvent<LevelData> LevelClearEvent = new UnityEvent<LevelData>();
+        public void LevelClear(LevelData nextLevel)
         {
             StartCoroutine(CoroutineUtil.Sequence(
-                CoroutineUtil.CallAction(() => LevelClearEvent.Invoke()),
+                CoroutineUtil.CallAction(() => LevelClearEvent.Invoke(nextLevel)),
                 CoroutineUtil.Wait(5),
-                CoroutineUtil.CallAction(() => TransitionLevel(nextLevel))
+                CoroutineUtil.CallAction(() => TransitionLevel(nextLevel.SceneType))
             ));
         }
 

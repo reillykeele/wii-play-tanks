@@ -10,8 +10,9 @@ namespace Actor
         [SerializeField] public Transform _muzzleTransform;
 
         [SerializeField] protected float _moveSpeed = 2f;
-        [SerializeField] protected float _turnSpeed = 90f;
+        [SerializeField] [Range(0f, 6 * Mathf.PI)] protected float _turnSpeed = Mathf.PI;
         [SerializeField] protected float _fireRate = 0.5f; // half a second
+
 
         protected Rigidbody _rb;
         protected Collider _collider;

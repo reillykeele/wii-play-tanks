@@ -55,30 +55,30 @@ namespace Actor
             var movement = new Vector3(_move, 0, _turn);
             if (movement != Vector3.zero)
             {
-                _rb.MovePosition(_rb.position + movement * _moveSpeed * Time.fixedDeltaTime);
-
                 var movementDir = movement.normalized;
-                
+
                 var dot = Vector3.Dot(transform.forward, movementDir);
-                if (Math.Abs(Mathf.Abs(dot) - 1f) < 0.005f)
+                if (Math.Abs(Mathf.Abs(dot) - 1f) < 0.0005f)
                 {
-                    // same direction
+                    // same direction; ignore
+                    transform.forward = Mathf.Sign(dot) * movementDir;
+                    _rb.MovePosition(_rb.position + movement * _moveSpeed * Time.fixedDeltaTime);
                 }
-                else if (Mathf.Abs(dot) < 0.005f)
+                else if (Mathf.Abs(dot) < 0.0005f)
                 {
-                    // 90 deg turn
+                    // = 90 deg turn
                     var f = movementDir;
-                    var _ = Vector3.zero;
-                    transform.forward = f; // Vector3.SmoothDamp(transform.forward, f, ref _, 0.01f);
+                    transform.forward = Vector3.RotateTowards(transform.forward, f,  _turnSpeed * Time.fixedDeltaTime, 0.0f);
                 }
                 else
                 {
+                    // > 90 deg turn
                     var f = Mathf.Sign(dot) * movementDir;
-                    var _ = Vector3.zero;
-                    transform.forward = f; Vector3.SmoothDamp(transform.forward, f, ref _, 0.01f);
+                    transform.forward = Vector3.RotateTowards(transform.forward, f, _turnSpeed * Time.fixedDeltaTime, 0.0f);
                 }
             }
 
+            // Aim the turret
             var forwardDir = new Vector3(_targetPos.x - transform.position.x, 0f, _targetPos.z - transform.position.z);
             if (forwardDir != Vector3.zero)
                 _turretTransform.forward = forwardDir;

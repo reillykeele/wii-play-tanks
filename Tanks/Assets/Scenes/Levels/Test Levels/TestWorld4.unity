@@ -395,7 +395,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b7d0fefc95180040b67d1708028c7a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NextLevel: 7
+  NextLevelData: {fileID: 11400000, guid: ca713547cda28fa49938bb627cdced38, type: 2}
   Player: {fileID: 0}
   AiTanks: []
 --- !u!114 &504220937
@@ -998,7 +998,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh74910
+  m_Name: pb_Mesh39432
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2

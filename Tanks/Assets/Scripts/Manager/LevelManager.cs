@@ -2,9 +2,9 @@
 using System.Linq;
 using Actor;
 using Actor.AITank;
+using Data;
 using Data.Enum;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using Util.Singleton;
 
@@ -12,7 +12,8 @@ namespace Manager
 {
     public class LevelManager : Singleton<LevelManager>
     {
-        public SceneType NextLevel;
+        // public SceneType NextLevel;
+        public LevelData NextLevelData;
 
         [HideInInspector] public TankController Player;
         [HideInInspector] public List<AITankController> AiTanks;
@@ -25,7 +26,7 @@ namespace Manager
             set
             {
                 _remainingTanks = value;
-                if (_remainingTanks <= 0) GameManager.Instance.LevelClear(NextLevel);
+                if (_remainingTanks <= 0) GameManager.Instance.LevelClear(NextLevelData); // LevelClear(NextLevel);
             }
         }
 
@@ -44,17 +45,18 @@ namespace Manager
 
         void Update()
         {
-
+            # if DEBUG
             if (Keyboard.current?.numpadPlusKey.wasPressedThisFrame == true)
             {
-                GameManager.Instance.LevelClear(NextLevel);
+                GameManager.Instance.LevelClear(NextLevelData);
             }
 
             if (Keyboard.current?.numpadEnterKey.wasPressedThisFrame == true)
             {
                 // transition to the next level
-                GameManager.Instance.TransitionLevel(NextLevel);
+                GameManager.Instance.TransitionLevel(NextLevelData.SceneType);
             }
+            #endif
         }
     }
 }

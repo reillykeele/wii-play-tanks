@@ -1,14 +1,23 @@
+using Data;
 using Data.Enum;
 using Manager;
+using TMPro;
+using Util.Helpers;
 
 namespace UI.UIControllers
 {
     public class HudUIController : UIController
     {
+        private TextMeshProUGUI _missionText;
+        private TextMeshProUGUI _tankCountText;
 
         protected override void Awake()
         {
             base.Awake();
+
+            var levelClearBanner= transform.parent.GetChildObject("LevelTransition").GetChildObject("MissionBanner");
+            _missionText = levelClearBanner.GetChildObject("MissionText").GetComponent<TextMeshProUGUI>();
+            _tankCountText = levelClearBanner.GetChildObject("EnemyTankNumberText").GetComponent<TextMeshProUGUI>();
         }
 
         void Start()
@@ -35,8 +44,11 @@ namespace UI.UIControllers
             
         }
 
-        public void DisplayLevelClear()
+        public void DisplayLevelClear(LevelData levelData)
         {
+            _missionText.text = $"Mission {levelData.LevelName}";
+            _tankCountText.text = $"Enemy Tanks: {levelData.NumTanks}";
+
             _canvasController.SwitchUI(UIPageType.MissionClearScreen);
         }
 
