@@ -54,7 +54,8 @@ namespace UI.Tween
 
         protected virtual void OnEnable()
         {
-            Reset();
+            if (_tweenDirection == TweenDirection.Out)
+                Reset();
 
             if (_tweenInOnEnable)
             {

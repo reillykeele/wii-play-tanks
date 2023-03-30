@@ -51,6 +51,15 @@ namespace Actor
 
         void FixedUpdate()
         {
+            // Aim the turret
+            // If we are in a cutscene, we still want to aim the turret. 
+            var forwardDir = new Vector3(_targetPos.x - transform.position.x, 0f, _targetPos.z - transform.position.z);
+            if (forwardDir != Vector3.zero)
+                _turretTransform.forward = forwardDir;
+
+            if (GameManager.Instance.IsPlaying() == false)
+                return;
+
             // TODO: Smooth rotation
             var movement = new Vector3(_move, 0, _turn);
             if (movement != Vector3.zero)
@@ -77,11 +86,6 @@ namespace Actor
                     transform.forward = Vector3.RotateTowards(transform.forward, f, _turnSpeed * Time.fixedDeltaTime, 0.0f);
                 }
             }
-
-            // Aim the turret
-            var forwardDir = new Vector3(_targetPos.x - transform.position.x, 0f, _targetPos.z - transform.position.z);
-            if (forwardDir != Vector3.zero)
-                _turretTransform.forward = forwardDir;
         }
 
         public void OnMove(InputValue val)
@@ -103,8 +107,10 @@ namespace Actor
 
         public void OnShoot(InputValue val)
         {
+            if (GameManager.Instance.IsPlaying() == false)
+                return;
+
             if (val.isPressed == false) return;
-            if (GameManager.Instance.IsPaused()) return;
 
             Shoot();
         }

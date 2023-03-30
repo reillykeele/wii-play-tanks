@@ -115,6 +115,16 @@ namespace Actor.AITank
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="dir"></param>
+        public void MoveInDirection(Vector3 dir, float distance = 1f)
+        {
+            transform.forward = Vector3.Lerp(transform.forward, dir, Time.fixedDeltaTime);
+            _agent.Move(dir * distance * Time.fixedDeltaTime);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public void ClearDestination()
         {
             _agent.isStopped = true;

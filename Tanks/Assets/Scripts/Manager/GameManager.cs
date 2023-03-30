@@ -98,6 +98,7 @@ namespace Manager
         public void LoadLevel(LevelData level)
         {
             StartCoroutine(CoroutineUtil.Sequence(
+                CoroutineUtil.CallAction(() => CurrentGameState = GameState.Cutscene),
                 LoadingManager.Instance.LoadSceneCoroutine(level.SceneType, true),
                 CoroutineUtil.CallAction(() => TransitionLevelEvent.Invoke(level)),
                 CoroutineUtil.Wait(0.5f), // TODO This is really janky...
@@ -110,9 +111,16 @@ namespace Manager
         public void LevelClear(LevelData nextLevel)
         {
             StartCoroutine(CoroutineUtil.Sequence(
+                CoroutineUtil.CallAction(() => CurrentGameState = GameState.Cutscene),
                 CoroutineUtil.CallAction(() => LevelClearEvent.Invoke()),
                 CoroutineUtil.Wait(5),
-                CoroutineUtil.CallAction(() => TransitionLevel(nextLevel))
+                CoroutineUtil.CallAction(() =>
+                {
+                    if (nextLevel == null)
+                        LoadingManager.Instance.LoadScene(SceneType.Menu);
+                    else
+                        TransitionLevel(nextLevel);
+                })
             ));
         }
 

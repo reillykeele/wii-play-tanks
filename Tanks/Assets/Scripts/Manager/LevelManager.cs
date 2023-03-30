@@ -26,7 +26,7 @@ namespace Manager
             set
             {
                 _remainingTanks = value;
-                if (_remainingTanks <= 0) GameManager.Instance.LevelClear(NextLevelData); // LevelClear(NextLevel);
+                if (_remainingTanks <= 0) GameManager.Instance.LevelClear(NextLevelData); 
             }
         }
 

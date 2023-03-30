@@ -643,7 +643,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b7d0fefc95180040b67d1708028c7a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NextLevelData: {fileID: 11400000, guid: 0be52403a0ce1f9438a2c2ac4c580051, type: 2}
+  NextLevelData: {fileID: 0}
   Player: {fileID: 0}
   AiTanks: []
 --- !u!114 &504220937
@@ -1088,7 +1088,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1060608759}
-  - component: {fileID: 1060608758}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -1096,20 +1095,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1060608758
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1060608757}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a7d0f84fff8e4a478eefa9739798b5f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  UIToLoad: 
-  ScenesToLoad: 02000000
 --- !u!4 &1060608759
 Transform:
   m_ObjectHideFlags: 0
@@ -1131,7 +1116,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh39710
+  m_Name: pb_Mesh37890
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -1577,6 +1562,9 @@ MonoBehaviour:
       m_Calls: []
   GameMode: 0
   Mixer: {fileID: 24100000, guid: 0f43cfc974ed69f4dbe6a3ff79496708, type: 2}
+  LevelStartEvent:
+    m_PersistentCalls:
+      m_Calls: []
   LevelClearEvent:
     m_PersistentCalls:
       m_Calls: []

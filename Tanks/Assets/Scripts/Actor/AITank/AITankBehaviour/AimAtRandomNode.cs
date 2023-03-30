@@ -9,12 +9,14 @@ namespace Actor.AITank.AITankBehaviour
         private AITankController _tankController;
 
         private Vector3 _randomDir;
+        private float _randomAngle = 360f;
         private float _randomRefreshRate;
         private float _lastRandomTime = 0;
 
-        public AimAtRandomNode(AITankController tankController, float randomRefreshRate)
+        public AimAtRandomNode(AITankController tankController, float randomAngle, float randomRefreshRate)
         {
             _tankController = tankController;
+            _randomAngle = randomAngle;
             _randomRefreshRate = randomRefreshRate;
         }
 
@@ -24,8 +26,9 @@ namespace Actor.AITank.AITankBehaviour
             if (_lastRandomTime + _randomRefreshRate < currTime)
             {
                 // Calculate new random direction
-                var randomDirection = Random.insideUnitCircle.normalized;
-                _randomDir = new Vector3(randomDirection.x, 0, randomDirection.y);
+                var randomAngle = (Random.value * _randomAngle) - (_randomAngle / 2);
+
+                _randomDir =  Quaternion.AngleAxis(randomAngle, Vector3.up) * _tankController.transform.forward;
 
                 _lastRandomTime = currTime;
             }

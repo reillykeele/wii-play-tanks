@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Actor.AITank.AITankBehaviour;
+using Manager;
 using UnityEngine;
 using Util.AI.BehaviourTree;
 
@@ -43,7 +44,7 @@ namespace Actor.AITank
                                         new SequenceNode(new List<Node>
                                         {
                                             new InverterNode(new IsPlayerInMovementRangeNode(this)),
-                                            new MoveToPositionNode(this),
+                                            new MoveToKnownPlayerLocationNode(this),
                                         }),
                                         new ClearPathNode(this)
                                     })
@@ -54,7 +55,7 @@ namespace Actor.AITank
                         {
                             new KnowPlayerLocationNode(this),
                             new DebugLogNode("Know player location, moving..."),
-                            new MoveToPositionNode(this),
+                            new MoveToKnownPlayerLocationNode(this),
                             new AimAtDestinationNode(this)
                         })
                     })
@@ -64,6 +65,9 @@ namespace Actor.AITank
         private int ticks = 1;
         void FixedUpdate()
         {
+            if (GameManager.Instance.IsPlaying() == false)
+                return;
+
             if (ticks++ % BTreeRefreshRate == 0)
             {
                 ticks = 1;

@@ -3,11 +3,11 @@ using Util.AI.BehaviourTree;
 
 namespace Actor.AITank.AITankBehaviour
 {
-    public class MoveToPositionNode : Node
+    public class MoveToKnownPlayerLocationNode : Node
     {
         private AITankController _tankController;
 
-        public MoveToPositionNode(AITankController tankController)
+        public MoveToKnownPlayerLocationNode(AITankController tankController)
         {
             _tankController = tankController;
         }
