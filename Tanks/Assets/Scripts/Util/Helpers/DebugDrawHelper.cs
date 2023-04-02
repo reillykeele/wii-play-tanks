@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.AI;
 
 namespace Util.Helpers
 {
@@ -106,6 +107,18 @@ namespace Util.Helpers
              Vector3 direction = point - pivot;
              return pivot + rotation * direction;
          }
-         #endregion
+        #endregion
+
+        #region NavMeshPath
+
+        public static void DrawPath(NavMeshPath path, Color color = default)
+        {
+            #if DEBUG
+            for (int i = 1; i < path.corners.Length; i++)
+                Debug.DrawLine(path.corners[i-1], path.corners[i], color);
+            #endif
+        }
+
+        #endregion
     }
 }

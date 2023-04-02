@@ -226,12 +226,12 @@ PrefabInstance:
     m_TransformParent: {fileID: 230487394}
     m_Modifications:
     - target: {fileID: -1421144639914665892, guid: c62cc05f6f4c9714eb970ed73d89d4a6, type: 3}
-      propertyPath: _fireRate
-      value: 3
+      propertyPath: _turnSpeed
+      value: 9.42
       objectReference: {fileID: 0}
-    - target: {fileID: -1421144639914665892, guid: c62cc05f6f4c9714eb970ed73d89d4a6, type: 3}
-      propertyPath: VisionAngle
-      value: 10
+    - target: {fileID: 3734324005979616898, guid: c62cc05f6f4c9714eb970ed73d89d4a6, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5282755739889658952, guid: c62cc05f6f4c9714eb970ed73d89d4a6, type: 3}
       propertyPath: m_RootOrder
@@ -280,10 +280,6 @@ PrefabInstance:
     - target: {fileID: 5282755739889658955, guid: c62cc05f6f4c9714eb970ed73d89d4a6, type: 3}
       propertyPath: m_Name
       value: SimpleAIPrefab
-      objectReference: {fileID: 0}
-    - target: {fileID: 5282755739889658955, guid: c62cc05f6f4c9714eb970ed73d89d4a6, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c62cc05f6f4c9714eb970ed73d89d4a6, type: 3}
@@ -430,6 +426,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 504220935}
+  - component: {fileID: 504220936}
   m_Layer: 0
   m_Name: Environment
   m_TagString: Untagged
@@ -457,6 +454,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &504220936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 504220934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b7d0fefc95180040b67d1708028c7a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NextLevelData: {fileID: 0}
+  Player: {fileID: 0}
+  AiTanks: []
 --- !u!1 &568771569
 GameObject:
   m_ObjectHideFlags: 0
@@ -717,7 +729,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh22834
+  m_Name: pb_Mesh29222
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -1403,6 +1415,9 @@ MonoBehaviour:
       m_Calls: []
   GameMode: 0
   Mixer: {fileID: 24100000, guid: 0f43cfc974ed69f4dbe6a3ff79496708, type: 2}
+  LevelStartEvent:
+    m_PersistentCalls:
+      m_Calls: []
   LevelClearEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -1415,7 +1430,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh22822
+  m_Name: pb_Mesh29210
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -1623,7 +1638,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1721,6 +1736,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3665871832451218251, guid: 83b0bc7c3ef5e5d4d86d239c0c9f7417, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -3.6
+      objectReference: {fileID: 0}
     - target: {fileID: 3665871832796707146, guid: 83b0bc7c3ef5e5d4d86d239c0c9f7417, type: 3}
       propertyPath: m_RootOrder
       value: 0

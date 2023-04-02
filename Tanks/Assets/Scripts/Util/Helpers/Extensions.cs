@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
 using UnityEngine;
+using UnityEngine.AI;
 using Object = UnityEngine.Object;
 
 namespace Util.Helpers
@@ -243,6 +244,24 @@ namespace Util.Helpers
         #region BoxCollider
 
         public static Vector3 GetHalfExtents(this BoxCollider collider) => collider.size / 2;
+
+        #endregion
+
+        #region NavMeshPath
+
+        /// <summary>
+        /// Calculates the total distance along the path.
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public static float GetPathLength(this NavMeshPath path)
+        {
+            var dist = 0f;
+            for (var i = 1; i < path.corners.Length; i++)
+                dist += Vector3.Distance(path.corners[i - 1], path.corners[i]);
+
+            return dist;
+        }
 
         #endregion
     }

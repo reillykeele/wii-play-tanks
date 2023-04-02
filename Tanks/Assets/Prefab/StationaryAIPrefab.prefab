@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 5282755739889658952}
   - component: {fileID: 4035765105555123716}
   - component: {fileID: 2949149987178838465}
-  - component: {fileID: 3734324005979616898}
   - component: {fileID: 7859044415760810655}
   m_Layer: 0
   m_Name: StationaryAIPrefab
@@ -64,28 +63,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 0
---- !u!195 &3734324005979616898
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5282755739889658955}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 3.5
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 2
-  m_BaseOffset: 0
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
 --- !u!114 &7859044415760810655
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -102,9 +79,9 @@ MonoBehaviour:
   _turretTransform: {fileID: 5850558401380608431}
   _muzzleTransform: {fileID: 6148593157613143717}
   _moveSpeed: 0
-  _turnSpeed: 90
+  _turnSpeedDeg: 720
   _fireRate: 3
-  VisionAngle: 30
+  VisionAngle: 360
   VisionRange: 10
   ShootRange: 7.5
   MovementRange: 0

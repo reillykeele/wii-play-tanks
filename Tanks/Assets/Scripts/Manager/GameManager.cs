@@ -86,8 +86,9 @@ namespace Manager
         }
 
         // Game-specific logic
-        // TODO: Figure out a better place or system to do this
-        
+        // TODO: Consider EXTENDING this class as TankGameManager
+        // TODO: and moving GameManager to Util.
+
         public UnityEvent LevelStartEvent = new UnityEvent();
         public IEnumerator StartLevelCoroutine() => CoroutineUtil.Sequence(
                 CoroutineUtil.Wait(7),
