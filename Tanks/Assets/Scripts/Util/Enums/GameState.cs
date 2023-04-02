@@ -7,5 +7,6 @@ namespace Util.Enums
         Playing = 2,
         Menu = 3,
         Cutscene = 4,
+        Loading = 5,
     }
 }

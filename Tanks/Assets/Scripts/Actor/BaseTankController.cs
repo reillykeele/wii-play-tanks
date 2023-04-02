@@ -5,7 +5,7 @@ namespace Actor
     [RequireComponent(typeof(Rigidbody))]
     public abstract class BaseTankController : MonoBehaviour
     {
-        [SerializeField] protected GameObject _projectilePrefab;
+        [SerializeField] protected ProjectileController _projectilePrefab;
         [SerializeField] protected Transform _turretTransform;
         [SerializeField] public Transform _muzzleTransform;
 
@@ -43,9 +43,8 @@ namespace Actor
             if (_lastShotTime + _fireRate >= currTime)
                 return;
 
-            var projectileGameObject = Instantiate(_projectilePrefab, _muzzleTransform.position, Quaternion.identity);
-            var projectile = projectileGameObject.GetComponent<ProjectileController>();
-            
+            var projectile = Instantiate(_projectilePrefab, _muzzleTransform.position, Quaternion.identity);
+
             projectile.SetDirection(_turretTransform.forward);
             projectile.SetShooter(gameObject);
 

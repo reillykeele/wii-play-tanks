@@ -7,6 +7,7 @@ using UI.Tween;
 using Util.Helpers;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using Util.Enums;
 
@@ -53,23 +54,17 @@ namespace UI
             if (resetOnSwitch)
                 Reset();
 
-            if (lastSelected != null)
-                lastSelected.Select();
-            else if (initialSelected != null)
-                initialSelected.Select();
-            else
-                _selectableControllers?.FirstOrDefault()?.Select();
+            if (Gamepad.current != null)
+            {
+                if (lastSelected != null)
+                    lastSelected.Select();
+                else if (initialSelected != null)
+                    initialSelected.Select();
+                else
+                    _selectableControllers?.FirstOrDefault()?.Select();
+            }
 
             gameObject.Enable();
-
-            // if (fadeIn)
-            //     StartCoroutine(UIHelper.FadeIn(_canvasGroup));
-            // else if (_canvasGroup != null)
-            //     _canvasGroup.alpha = 1f;
-
-            // if (_animators != null)
-            //     foreach (var animator in _animators)
-            //         animator.TrySetBool("transitionIn", resetOnSwitch);
         }
 
         public virtual IEnumerator EnableCoroutine(bool resetOnSwitch = false, bool transition = true)
@@ -77,13 +72,15 @@ namespace UI
             if (resetOnSwitch)
                 Reset();
 
-            if (lastSelected != null)
-                lastSelected.Select();
-            else if (initialSelected != null)
-                initialSelected.Select();
-            else
-                _selectableControllers?.FirstOrDefault()?.Select();
-
+            if (Gamepad.current != null)
+            {
+                if (lastSelected != null)
+                    lastSelected.Select();
+                else if (initialSelected != null)
+                    initialSelected.Select();
+                else
+                    _selectableControllers?.FirstOrDefault()?.Select();
+            }
 
             if (transition)
                 foreach (var tween in _tweens)

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 namespace UI.ButtonControllers
 {
     [RequireComponent(typeof(Selectable))]
-    public abstract class ASelectableController : MonoBehaviour, ISelectHandler, IPointerEnterHandler
+    public abstract class ASelectableController : MonoBehaviour, ISelectHandler, IPointerEnterHandler, IPointerExitHandler
     {
         protected CanvasController _canvasController;
         protected CanvasAudioController _canvasAudioController;
@@ -22,5 +22,6 @@ namespace UI.ButtonControllers
 
         public virtual void OnSelect(BaseEventData eventData) { }
         public virtual void OnPointerEnter(PointerEventData eventData) => Select();
+        public virtual void OnPointerExit(PointerEventData eventData) => EventSystem.current.SetSelectedGameObject(null);
     }
 }

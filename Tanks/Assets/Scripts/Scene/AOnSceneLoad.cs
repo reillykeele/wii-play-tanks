@@ -5,7 +5,7 @@ namespace Scene
 {
     public abstract class AOnSceneLoad : MonoBehaviour
     {
-        protected virtual void Awake()
+        protected virtual void Start()
         {
             LoadingManager.Instance.OnSceneLoadedEvent.AddListener(OnSceneLoad);
         }

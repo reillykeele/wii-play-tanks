@@ -8,9 +8,12 @@ namespace Actor.AITank
 {
     public class StationaryAITankController : AITankController
     {
-        protected BTree _tankBTree;
+        [Header("Stationary AI Tank")] 
+        [SerializeField] private int _bTreeRefreshRate = 1;
+        [SerializeField] private float _scanAngle = 45f;
+        [SerializeField] private float _scanSpeed = 0.25f;
 
-        public int BTreeRefreshRate = 1;
+        protected BTree _tankBTree;
 
         protected override void Awake()
         {
@@ -32,7 +35,7 @@ namespace Actor.AITank
                             new AimAtPlayerNode(this),
                             new ShootNode(this)
                         }),
-                        new AimAtRandomNode(this, 90f, 3f)
+                        new AimScanNode(this, _scanAngle, _scanSpeed)
                     })
             };
         }
@@ -43,7 +46,7 @@ namespace Actor.AITank
             if (GameManager.Instance.IsPlaying() == false)
                 return;
 
-            if (ticks++ % BTreeRefreshRate == 0)
+            if (ticks++ % _bTreeRefreshRate == 0)
             {
                 ticks = 1;
                 _tankBTree.Tick();

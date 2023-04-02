@@ -9,8 +9,6 @@ namespace Actor
     [RequireComponent(typeof(PlayerInput))]
     public class TankController : BaseTankController
     {
-        [SerializeField] private RectTransform _crosshair;
-
         private PlayerInput _input;
 
         private Camera _camera;
@@ -26,11 +24,6 @@ namespace Actor
 
             _input = GetComponent<PlayerInput>();
 
-            #if UNITY_EDITOR
-            if (_crosshair == null)
-                Debug.LogWarning("Cross hair is not set in the Editor.");
-            #endif
-            
             // LevelManager.Instance.Player = this;
             GameManager.Instance.OnPauseGameEvent.AddListener(OnPause);
             GameManager.Instance.OnResumeGameEvent.AddListener(OnResume);
@@ -100,8 +93,6 @@ namespace Actor
             var mousePos = val.Get<Vector2>();
 
             _targetPos = _camera.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, _camera.transform.position.y));
-
-            _crosshair.position= mousePos;
         }
 
         public void OnShoot(InputValue val)
@@ -114,20 +105,14 @@ namespace Actor
             Shoot();
         }
 
-        public void OnPause()
-        {
-            _crosshair.gameObject.Disable();
-        }
+        public void OnPause() { }
 
-        public void OnResume()
-        {
-            _crosshair.gameObject.Enable();
-        }
+        public void OnResume() { }
 
         public override void Explode()
         {
-            // Do not explode
-            LevelManager.Instance.ResetLevel();
+           LevelManager.Instance.ResetLevel();
+           Destroy(gameObject);
         }
     }
 }

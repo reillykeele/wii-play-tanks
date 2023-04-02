@@ -9,12 +9,13 @@ namespace UI
     {
         private UIController _uiController;
 
-        protected override void Awake()
+        void Awake()
         {
-            base.Awake();
-
             _uiController = GetComponent<UIController>();
-            
+        }
+
+        protected override void Start()
+        {
             if (LoadingManager.Instance.IsLoading)
                 _uiController.Disable();
         }

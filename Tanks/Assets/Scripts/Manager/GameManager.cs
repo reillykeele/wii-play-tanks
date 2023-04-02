@@ -24,17 +24,11 @@ namespace Manager
         public GameConfigScriptableObject Config;
 
         [Header("Game State")]
+        public UnityEvent<GameState> OnGameStateChangeEvent;
         public UnityEvent OnPauseGameEvent;
         public UnityEvent OnResumeGameEvent;
-        private GameState _currentGameState = GameState.Playing;
-        public GameState CurrentGameState
-        {
-            get => _currentGameState;
-            set => _currentGameState = value;
-        }
-
-        [Header("Game Mode")]
-        public GameMode GameMode = GameMode.None;
+        [SerializeField] private GameState _currentGameState = GameState.Playing;
+        public GameState CurrentGameState => _currentGameState;
 
         // Audio
         // TODO: Should this be elsewhere?
@@ -51,6 +45,29 @@ namespace Manager
                 SceneManager.LoadSceneAsync("Loading", LoadSceneMode.Additive);
         }
 
+        public void ChangeGameState(GameState newGameState)
+        {
+            if (_currentGameState == newGameState)
+                return;
+
+            switch (newGameState)
+            {
+                case GameState.None:
+                    break;
+                case GameState.Paused:
+                    break;
+                case GameState.Playing:
+                    break;
+                case GameState.Menu:
+                    break;
+                case GameState.Cutscene:
+                    break;
+            }
+
+            _currentGameState = newGameState;
+            OnGameStateChangeEvent.Invoke(newGameState);
+        }
+
         public bool IsPlaying() => CurrentGameState == GameState.Playing;
         public bool IsPaused() => CurrentGameState == GameState.Paused;
 
@@ -58,7 +75,7 @@ namespace Manager
         {
             if (CurrentGameState != GameState.Playing) return;
 
-            CurrentGameState = GameState.Paused;
+            ChangeGameState(GameState.Paused);
             OnPauseGameEvent.Invoke();
 
             Time.timeScale = 0;
@@ -68,7 +85,7 @@ namespace Manager
         {
             if (CurrentGameState != GameState.Paused) return;
 
-            CurrentGameState = GameState.Playing;
+            ChangeGameState(GameState.Playing);
             OnResumeGameEvent.Invoke();
 
             Time.timeScale = 1;
@@ -93,15 +110,15 @@ namespace Manager
         public IEnumerator StartLevelCoroutine() => CoroutineUtil.Sequence(
                 CoroutineUtil.Wait(7),
                 CoroutineUtil.CallAction(() => LevelStartEvent.Invoke()),
-                CoroutineUtil.CallAction(() => CurrentGameState = GameState.Playing)
+                CoroutineUtil.CallAction(() => ChangeGameState(GameState.Playing))
             );
 
         public void LoadLevel(LevelData level)
         {
             StartCoroutine(CoroutineUtil.Sequence(
-                CoroutineUtil.CallAction(() => CurrentGameState = GameState.Cutscene),
                 LoadingManager.Instance.LoadSceneCoroutine(level.SceneType, true),
                 CoroutineUtil.CallAction(() => TransitionLevelEvent.Invoke(level)),
+                CoroutineUtil.CallAction(() => ChangeGameState(GameState.Cutscene)),
                 CoroutineUtil.Wait(0.5f), // TODO This is really janky...
                 LoadingManager.Instance.SetLoading(false),
                 StartLevelCoroutine()
@@ -112,7 +129,7 @@ namespace Manager
         public void LevelClear(LevelData nextLevel)
         {
             StartCoroutine(CoroutineUtil.Sequence(
-                CoroutineUtil.CallAction(() => CurrentGameState = GameState.Cutscene),
+                CoroutineUtil.CallAction(() => ChangeGameState(GameState.Cutscene)),
                 CoroutineUtil.CallAction(() => LevelClearEvent.Invoke()),
                 CoroutineUtil.Wait(5),
                 CoroutineUtil.CallAction(() =>

@@ -32,6 +32,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7272619504592934803}
   - {fileID: 8706606274210656604}
@@ -58,6 +59,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -95,10 +97,21 @@ Rigidbody:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6076529297384251787}
-  serializedVersion: 2
+  serializedVersion: 4
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -112,8 +125,17 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6076529297384251787}
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
   m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
+  serializedVersion: 2
   m_Radius: 0.3
   m_Height: 1
   m_Direction: 2
@@ -131,6 +153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _explosionParticleSystem: {fileID: 8706606274196414720}
+  _impulseForce: 0.1
   _speed: 5
   _bounces: 1
 --- !u!114 &1847515287785961420
@@ -147,6 +170,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ImpulseDefinition:
     m_ImpulseChannel: 1
+    m_ImpulseShape: 3
+    m_CustomImpulseShape:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_ImpulseDuration: 0.2
+    m_ImpulseType: 0
+    m_DissipationRate: 0
     m_RawSignal: {fileID: 11400000, guid: 69ce8388f6785dd4c8c39915efece2f4, type: 2}
     m_AmplitudeGain: 1
     m_FrequencyGain: 1
@@ -175,11 +208,13 @@ MonoBehaviour:
     m_DissipationMode: 2
     m_DissipationDistance: 1000
     m_PropagationSpeed: 343
+  m_DefaultVelocity: {x: -1, y: -1, z: 0}
 --- !u!1001 &6570513192186000606
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 6076529297384251783}
     m_Modifications:
     - target: {fileID: 195792, guid: 4421f3c3478ba9f4184b9d0fdad8c5d6, type: 3}
@@ -835,6 +870,9 @@ PrefabInstance:
       value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4421f3c3478ba9f4184b9d0fdad8c5d6, type: 3}
 --- !u!4 &6570513192186075540 stripped
 Transform:
@@ -846,6 +884,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 6076529297384251783}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: fc7d9bbb055ff28449cbf88256789b4a, type: 3}
@@ -909,6 +948,9 @@ PrefabInstance:
       value: Shell
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fc7d9bbb055ff28449cbf88256789b4a, type: 3}
 --- !u!4 &7272619504592934803 stripped
 Transform:
@@ -920,6 +962,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 6076529297384251783}
     m_Modifications:
     - target: {fileID: 195792, guid: 4549564c296346f49a4df14079ec2def, type: 3}
@@ -971,14 +1014,17 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4549564c296346f49a4df14079ec2def, type: 3}
---- !u!4 &8706606274210656604 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 486730, guid: 4549564c296346f49a4df14079ec2def, type: 3}
-  m_PrefabInstance: {fileID: 8706606274210700310}
-  m_PrefabAsset: {fileID: 0}
 --- !u!198 &8706606274196414720 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 19807510, guid: 4549564c296346f49a4df14079ec2def, type: 3}
+  m_PrefabInstance: {fileID: 8706606274210700310}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8706606274210656604 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 486730, guid: 4549564c296346f49a4df14079ec2def, type: 3}
   m_PrefabInstance: {fileID: 8706606274210700310}
   m_PrefabAsset: {fileID: 0}

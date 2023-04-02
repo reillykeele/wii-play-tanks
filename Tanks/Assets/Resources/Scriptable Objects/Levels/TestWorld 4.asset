@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SceneType: 6
   LevelName: 4
-  NumTanks: 1
+  NumTanks: 3

@@ -10,8 +10,8 @@ namespace Actor
         private CinemachineImpulseSource _impulseSource;
 
         [Header("Effects")] 
-        [SerializeField] 
-        private ParticleSystem _explosionParticleSystem;
+        [SerializeField] private ParticleSystem _explosionParticleSystem;
+        [SerializeField] private float _impulseForce = 0.1f;
 
         [Header("Settings")] 
         [SerializeField] private float _speed;
@@ -78,7 +78,8 @@ namespace Actor
 
         void Explode()
         {
-            _impulseSource.GenerateImpulse();
+            var explosionDir = -transform.position.normalized;
+            _impulseSource.GenerateImpulse(explosionDir * _impulseForce);
 
             _explosionParticleSystem.transform.parent = null;
             _explosionParticleSystem.Play();

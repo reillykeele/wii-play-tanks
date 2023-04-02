@@ -20,7 +20,8 @@ namespace UI.UIControllers
         {
             // TODO: Use Input System
             if (Keyboard.current?.anyKey.wasPressedThisFrame == true ||
-                Gamepad.current?.startButton.wasPressedThisFrame == true)
+                Gamepad.current?.startButton.wasPressedThisFrame == true ||
+                Mouse.current?.leftButton.wasPressedThisFrame == true)
             {
                 _canvasAudioController.Play(CanvasAudioController.CanvasAudioSoundType.Start);
                 _canvasController.SwitchUI(TargetUiPageType, true);

@@ -53,7 +53,7 @@ namespace Actor.AITank
             _path = new NavMeshPath();
 
             _agent = GetComponent<NavMeshAgent>();
-            //
+            
             // _agent.speed = _moveSpeed;
 
             // _agent.updatePosition = false;
@@ -206,7 +206,7 @@ namespace Actor.AITank
                 // Failed to calculate the path, try to sample the position
                 if (NavMesh.SamplePosition(pos, out var hit, 10f, 1))
                 {
-                    Debug.Log("Sampled position on NavMesh");
+                    // Debug.Log("Sampled position on NavMesh");
                     _agent.CalculatePath(hit.position, _path);
                     _destination = hit.position;
                 }

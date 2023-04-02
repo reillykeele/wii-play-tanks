@@ -7,6 +7,7 @@ using Data.Enum;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Util.Coroutine;
+using Util.Enums;
 using Util.Singleton;
 
 namespace Manager
@@ -62,7 +63,8 @@ namespace Manager
 
         public void ResetLevel()
         {
-            StartCoroutine(CoroutineUtil.WaitForExecute(() => GameManager.Instance.LoadLevel(CurrentLevelData), 3f));
+            GameManager.Instance.ChangeGameState(GameState.Cutscene);
+            StartCoroutine(CoroutineUtil.WaitForExecute(() => GameManager.Instance.TransitionLevel(CurrentLevelData), 3f));
         }
     }
 }

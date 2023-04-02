@@ -21,6 +21,8 @@ namespace Manager
         private CanvasGroup _loadingCanvasGroup;
 
         public UnityEvent OnSceneLoadedEvent = new UnityEvent();
+        public UnityEvent OnLoadStartEvent = new UnityEvent();
+        public UnityEvent OnLoadEndEvent = new UnityEvent();
 
         protected override void Awake()
         {
@@ -111,12 +113,15 @@ namespace Manager
         {
             if (value == true && !IsLoading)
             {
+                GameManager.Instance.ChangeGameState(GameState.Loading);
                 IsLoading = true;
+                OnLoadStartEvent.Invoke();
                 yield return UIHelper.FadeInAndEnable(_uiController, _loadingCanvasGroup);
             }
             else if (value == false)
             {
                 IsLoading = false;
+                OnLoadEndEvent.Invoke();
                 yield return UIHelper.FadeOutAndDisable(_uiController, _loadingCanvasGroup);
             }
         }

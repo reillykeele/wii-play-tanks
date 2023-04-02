@@ -96,7 +96,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed8ea631fb74f5c4b873428abda13fe3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _projectilePrefab: {fileID: 6076529297384251787, guid: 73b676315fd42574a971cbf3f9297480, type: 3}
+  _projectilePrefab: {fileID: 6076529297384251780, guid: 73b676315fd42574a971cbf3f9297480, type: 3}
   _turretTransform: {fileID: 5850558401380608431}
   _muzzleTransform: {fileID: 6148593157613143717}
   _moveSpeed: 2

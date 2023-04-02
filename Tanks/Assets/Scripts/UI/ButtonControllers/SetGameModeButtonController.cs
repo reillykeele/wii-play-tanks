@@ -9,7 +9,7 @@ namespace UI.ButtonControllers
     
         public override void OnClick()
         {
-            GameManager.Instance.GameMode = TargetGameMode;
+            
         }
     }
 }
