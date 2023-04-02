@@ -1,13 +1,20 @@
 using System.Linq;
+using Cinemachine;
 using UnityEngine;
 
 namespace Actor
 {
+    [RequireComponent(typeof(CinemachineImpulseSource))]
     public class ProjectileController : MonoBehaviour
     {
-        [Header("Effects")] [SerializeField] private ParticleSystem _explosionParticleSystem;
+        private CinemachineImpulseSource _impulseSource;
 
-        [Header("Settings")] [SerializeField] private float _speed;
+        [Header("Effects")] 
+        [SerializeField] 
+        private ParticleSystem _explosionParticleSystem;
+
+        [Header("Settings")] 
+        [SerializeField] private float _speed;
         [SerializeField] private int _bounces;
 
         [HideInInspector] private GameObject _shooter;
@@ -17,6 +24,8 @@ namespace Actor
 
         void Awake()
         {
+            _impulseSource = GetComponent<CinemachineImpulseSource>();
+
             _remainingBounces = _bounces;
         }
 
@@ -69,6 +78,8 @@ namespace Actor
 
         void Explode()
         {
+            _impulseSource.GenerateImpulse();
+
             _explosionParticleSystem.transform.parent = null;
             _explosionParticleSystem.Play();
 
