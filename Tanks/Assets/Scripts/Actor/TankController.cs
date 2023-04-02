@@ -53,14 +53,13 @@ namespace Actor
         {
             // Aim the turret
             // If we are in a cutscene, we still want to aim the turret. 
-            var forwardDir = new Vector3(_targetPos.x - transform.position.x, 0f, _targetPos.z - transform.position.z);
-            if (forwardDir != Vector3.zero)
-                _turretTransform.forward = forwardDir;
+            var turretForwardDir = new Vector3(_targetPos.x - transform.position.x, 0f, _targetPos.z - transform.position.z);
+            if (turretForwardDir != Vector3.zero)
+                _turretTransform.forward = turretForwardDir;
 
             if (GameManager.Instance.IsPlaying() == false)
                 return;
-
-            // TODO: Smooth rotation
+            
             var movement = new Vector3(_move, 0, _turn);
             if (movement != Vector3.zero)
             {
@@ -76,14 +75,14 @@ namespace Actor
                 else if (Mathf.Abs(dot) < 0.0005f)
                 {
                     // = 90 deg turn
-                    var f = movementDir;
-                    transform.forward = Vector3.RotateTowards(transform.forward, f,  _turnSpeed * Time.fixedDeltaTime, 0.0f);
+                    var targetRot = movementDir;
+                    transform.forward = Vector3.RotateTowards(transform.forward, targetRot,  _turnSpeed * Time.fixedDeltaTime, 0.0f);
                 }
                 else
                 {
                     // > 90 deg turn
-                    var f = Mathf.Sign(dot) * movementDir;
-                    transform.forward = Vector3.RotateTowards(transform.forward, f, _turnSpeed * Time.fixedDeltaTime, 0.0f);
+                    var targetRot = Mathf.Sign(dot) * movementDir;
+                    transform.forward = Vector3.RotateTowards(transform.forward, targetRot, _turnSpeed * Time.fixedDeltaTime, 0.0f);
                 }
             }
         }

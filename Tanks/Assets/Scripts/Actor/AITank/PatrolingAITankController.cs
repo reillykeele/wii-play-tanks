@@ -6,7 +6,7 @@ using Util.AI.BehaviourTree;
 
 namespace Actor.AITank
 {
-    public class WanderingAITankController : AITankController
+    public class PatrolingAITankController : AITankController
     {
         protected BTree _tankBTree;
 
@@ -28,7 +28,7 @@ namespace Actor.AITank
                 Root = new SelectorNode(
                     new List<Node>
                     {
-                        
+
                         new ParallelNode(new List<Node>
                         {
                             // If we see the player, aim at them
@@ -46,7 +46,8 @@ namespace Actor.AITank
                             new SequenceNode(new List<Node>
                             {
                                 // choose a direction
-                                new FindWanderDirectionNode(this, 5),
+                                new FindForwardDirectionNode(this),
+                                // new MoveToKnownPlayerLocationNode(this),
                                 new MoveToDestinationNode(this),
                                 new AimAtDestinationNode(this)
                             })

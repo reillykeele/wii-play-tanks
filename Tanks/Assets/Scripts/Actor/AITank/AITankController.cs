@@ -1,15 +1,15 @@
+using System;
 using System.Linq;
 using Manager;
 using UnityEngine;
 using UnityEngine.AI;
+using Util.Helpers;
 
 namespace Actor.AITank
 {
     [RequireComponent(typeof(NavMeshAgent))]
     public class AITankController : BaseTankController
     {
-        protected NavMeshAgent _agent;
-
         /// <summary>
         /// The angle from the turret forward that the tank can see.
         /// </summary>
@@ -30,18 +30,29 @@ namespace Actor.AITank
         /// </summary>
         public float MovementRange = 5;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        public float StoppingDistance = 1f;
+
         public Vector3? LastKnownPlayerLocation;
 
         protected bool _hasPathTarget = false;
         protected Vector3 _target;
 
+        protected NavMeshAgent _agent;
+        protected Vector3 _destination;
+        protected NavMeshPath _path;
+
         protected override void Awake()
         {
             base.Awake();
 
-            _agent = GetComponent<NavMeshAgent>();
+            _path = new NavMeshPath();
 
-            _agent.speed = _moveSpeed;
+            _agent = GetComponent<NavMeshAgent>();
+            //
+            // _agent.speed = _moveSpeed;
 
             // _agent.updatePosition = false;
             // _agent.updateRotation = false;
@@ -92,7 +103,7 @@ namespace Actor.AITank
         /// <summary>
         /// 
         /// </summary>
-        public void AimAtDestination() => AimAtPosition(_agent.destination);
+        public void AimAtDestination() => AimAtPosition(_destination);
 
         /// <summary>
         /// Rotates the turret to aim in the tank's forward direction.
@@ -103,32 +114,152 @@ namespace Actor.AITank
         /// 
         /// </summary>
         /// <param name="pos">The position to pathfind to.</param>
-        public bool MoveToPosition(Vector3 pos)
+        public void MoveTowardsPosition(Vector3 pos)
         {
-            var success = _agent.SetDestination(pos);
+            var dir = (pos - transform.position);
+            dir.y = 0f;
 
-            // _agent.Move
+            if (dir != Vector3.zero)
+            {
+                var movementDir = dir.normalized; //= MathHelper.RoundTo8(dir);
 
-            return success;
+                var dot = Vector3.Dot(transform.forward, movementDir);
+                if (Math.Abs(Mathf.Abs(dot) - 1f) < 0.0005f)
+                {
+                    // same direction; ignore
+                    transform.forward = Mathf.Sign(dot) * movementDir;
+                    _agent.Move(movementDir * _moveSpeed * Time.fixedDeltaTime);
+                }
+                else if (Mathf.Abs(dot) < 0.0005f)
+                {
+                    // = 90 deg turn
+                    var targetRot = movementDir;
+                    transform.forward = Vector3.RotateTowards(transform.forward, targetRot, _turnSpeed * Time.fixedDeltaTime, 0.0f);
+                }
+                else
+                {
+                    // > 90 deg turn
+                    var targetRot = Mathf.Sign(dot) * movementDir;
+                    transform.forward = Vector3.RotateTowards(transform.forward, targetRot, _turnSpeed * Time.fixedDeltaTime, 0.0f);
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Moves the tank towards the set destination.
+        /// </summary>
+        public virtual void MoveToDestination()
+        {
+            if (IsAtDestination())
+            {
+                Debug.Log("already at destination 1");
+                return;
+            }
+
+            var nextPos = _path.corners[1];
+            if (Vector3.Distance(transform.position, nextPos) < 0.5f)
+            {
+                RecalculatePath();
+                if (IsAtDestination())
+                {
+                    Debug.Log("already at destination 2");
+                    return;
+                }
+            }
+
+            MoveTowardsPosition(_path.corners[1]);
+        }
+
+        /// <summary>
+        /// Indicates whether the tank has a destination currently set.
+        /// </summary>
+        /// <returns>Returns <c>true</c> if a destination is set, otherwise <c>false</c>.</returns>
+        public bool HasDestination() => _path.corners.Any();
+
+        /// <summary>
+        /// Checks whether the tank is within the stopping distance of the destination.
+        /// </summary>
+        /// <returns></returns>
+        public bool IsAtDestination()
+        {
+            if (_path.corners.Length <= 1) 
+                return true;
+
+            if (_path.corners.Length == 2 && Vector3.Distance(transform.position, _path.corners[1]) < StoppingDistance)
+                return true;
+
+            return false;
         }
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="dir"></param>
-        public void MoveInDirection(Vector3 dir, float distance = 1f)
+        /// <param name="pos"></param>
+        public void SetDestination(Vector3 pos)
         {
-            transform.forward = Vector3.Lerp(transform.forward, dir, Time.fixedDeltaTime);
-            _agent.Move(dir * distance * Time.fixedDeltaTime);
+            // If the destination is already set, we don't need to recalculate
+            if (_destination == pos)
+                return;
+            
+            if (_agent.CalculatePath(pos, _path) == false || _path.corners.Any() == false)
+            {
+                // Failed to calculate the path, try to sample the position
+                if (NavMesh.SamplePosition(pos, out var hit, 10f, 1))
+                {
+                    Debug.Log("Sampled position on NavMesh");
+                    _agent.CalculatePath(hit.position, _path);
+                    _destination = hit.position;
+                }
+            }
+            else
+            {
+                // Successfully calculated a new path to the destination
+                _destination = pos;
+            }
+
+            // for (int i = 0; i < _path.corners.Length; i++)
+            // {
+            //     Debug.Log($"[{i}] {_path.corners[i]}");
+            // }
+
+            DebugDrawHelper.DrawPath(_path, Color.red);
         }
+
+        /// <summary>
+        /// Gets the distance along the current path to the destination.
+        /// </summary>
+        /// <returns>Returns <c>float.MaxValue</c> if not path is set, otherwise returns the distance along the path.</returns>
+        public float GetPathLength()
+        {
+            if (HasDestination() == false)
+                return float.MaxValue;
+
+            return _path.GetPathLength();
+        }
+
+        /// <summary>
+        /// Gets the euclidean distance between the tank and the current destination.
+        /// </summary>
+        /// <returns>Returns <c>float.MaxValue</c> if not path is set, otherwise returns the distance along the path.</returns>
+        public float GetDistanceToDestination()
+        {
+            if (HasDestination() == false)
+                return float.MaxValue;
+
+            return Vector3.Distance(transform.position, _destination);
+        }
+
+        public void RecalculatePath() => _agent.CalculatePath(_destination, _path);
 
         /// <summary>
         /// 
         /// </summary>
         public void ClearDestination()
         {
-            _agent.isStopped = true;
-            _agent.ResetPath();
+            _path.ClearCorners();
+
+            // _agent.isStopped = true;
+            // _agent.ResetPath();
         }
 
         /// <summary>

@@ -18,12 +18,15 @@ namespace Actor.AITank.AITankBehaviour
 
             if (pos == null) return NodeState.Failure;
 
-            var success = _tankController.MoveToPosition(pos.Value);
-            if (success)
-                return NodeState.Success;
+            _tankController.SetDestination(pos.Value);
+            _tankController.MoveToDestination();
 
-            Debug.Log("MoveToPosition Failure");
-            return NodeState.Failure;
+            // var success = _tankController.MoveToPosition(pos.Value);
+            // if (success)
+            return NodeState.Success;
+
+            // Debug.Log("MoveToPosition Failure");
+            // return NodeState.Failure;
 
         }
     }

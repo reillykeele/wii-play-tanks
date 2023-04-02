@@ -3,22 +3,21 @@ using Util.AI.BehaviourTree;
 
 namespace Actor.AITank.AITankBehaviour
 {
-    public class MoveForwardNode : Node
+    public class SetDestinationNode : Node
     {
         private AITankController _tankController;
-        private float _distance;
+        private Vector3 _pos;
 
-        public MoveForwardNode(AITankController tankController, float distance)
+        public SetDestinationNode(AITankController tankController, Vector3 pos)
         {
             _tankController = tankController;
-            _distance = distance;
+            _pos = pos;
         }
 
         public override NodeState Tick()
         {
-            var dir = _tankController.transform.forward;
-
-            _tankController.MoveInDirection(dir, _distance);
+            _tankController.SetDestination(_pos);
+            _tankController.MoveToDestination();
             
             return NodeState.Success;
         }
