@@ -127,6 +127,7 @@ namespace Actor
         public override void Explode()
         {
             // Do not explode
+            LevelManager.Instance.ResetLevel();
         }
     }
 }

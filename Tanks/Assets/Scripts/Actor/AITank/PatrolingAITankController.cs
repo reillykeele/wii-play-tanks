@@ -40,16 +40,19 @@ namespace Actor.AITank
                                     new AimAtPlayerNode(this),
                                     new ShootNode(this),
                                 }),
-                                new AimAtRandomNode(this, RandomAngle, RandomRefreshRate)
+                                new SequenceNode(new List<Node>
+                                {
+                                    // new DebugLogNode("bruh"),
+                                    // new AimAtRandomNode(this, RandomAngle, RandomRefreshRate)
+                                    new AimScanTowardsDestinationNode(this, 45f, 0.25f)
+                                })
                             }),
                             // Wander
                             new SequenceNode(new List<Node>
                             {
                                 // choose a direction
-                                new FindForwardDirectionNode(this),
-                                // new MoveToKnownPlayerLocationNode(this),
+                                new FindForwardDirectionNode(this, StoppingDistance),
                                 new MoveToDestinationNode(this),
-                                new AimAtDestinationNode(this)
                             })
                         })
                     })

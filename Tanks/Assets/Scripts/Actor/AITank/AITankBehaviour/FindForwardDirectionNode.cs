@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Data.Constants;
+using UnityEngine;
 using Util.AI.BehaviourTree;
 
 namespace Actor.AITank.AITankBehaviour
@@ -6,28 +7,31 @@ namespace Actor.AITank.AITankBehaviour
     public class FindForwardDirectionNode : Node
     {
         private AITankController _tankController;
+        private float _stoppingDistance;
 
-        public FindForwardDirectionNode(AITankController tankController)
+        private static LayerMask LAYER_MASK = LayerMask.GetMask(Layer.Walls, Layer.Tank);
+
+        public FindForwardDirectionNode(AITankController tankController, float stoppingDistance)
         {
             _tankController = tankController;
+            _stoppingDistance = stoppingDistance;
         }
 
         public override NodeState Tick()
         {
             if (_tankController.HasDestination() == false)
             {
-                // If we don't have a destination set, shoot a raycast forward and go that way
-                if (Physics.Raycast(_tankController.transform.position, _tankController.transform.forward, out var hitInfo, 100f, LayerMask.NameToLayer("Walls")))
+                // If we don't have a destination set, shoot a raycast forward and go thatF way
+                if (Physics.Raycast(_tankController.transform.position, _tankController.transform.forward, out var hitInfo, LAYER_MASK))
                     _tankController.SetDestination(hitInfo.point);
             }
             else
             {
                 var distanceToDestination = _tankController.GetDistanceToDestination();
-                if (distanceToDestination < 1.25f)
+                if (distanceToDestination < _stoppingDistance * 2f || (Physics.Raycast(_tankController.transform.position, _tankController.transform.forward, 1.5f, LayerMask.GetMask(Layer.Tank))))
                 {
-                    Debug.Log("close");
-                    var lHit = Physics.Raycast(_tankController.transform.position, -_tankController.transform.right, out var lHitInfo, 50f, LayerMask.NameToLayer("Walls"));
-                    var rHit = Physics.Raycast(_tankController.transform.position, _tankController.transform.right, out var rHitInfo, 50f, LayerMask.NameToLayer("Walls"));
+                    var lHit = Physics.Raycast(_tankController.transform.position, -_tankController.transform.right, out var lHitInfo, LAYER_MASK);
+                    var rHit = Physics.Raycast(_tankController.transform.position, _tankController.transform.right, out var rHitInfo, LAYER_MASK);
 
                     if (lHit && lHitInfo.distance > rHitInfo.distance)
                     {

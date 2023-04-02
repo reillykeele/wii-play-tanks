@@ -6,13 +6,14 @@ using Data;
 using Data.Enum;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Util.Coroutine;
 using Util.Singleton;
 
 namespace Manager
 {
     public class LevelManager : Singleton<LevelManager>
     {
-        // public SceneType NextLevel;
+        public LevelData CurrentLevelData;
         public LevelData NextLevelData;
 
         [HideInInspector] public TankController Player;
@@ -57,6 +58,11 @@ namespace Manager
                 GameManager.Instance.TransitionLevel(NextLevelData);
             }
             #endif
+        }
+
+        public void ResetLevel()
+        {
+            StartCoroutine(CoroutineUtil.WaitForExecute(() => GameManager.Instance.LoadLevel(CurrentLevelData), 3f));
         }
     }
 }

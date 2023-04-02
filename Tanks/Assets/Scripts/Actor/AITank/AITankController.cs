@@ -1,5 +1,7 @@
 using System;
 using System.Linq;
+using Data.Constants;
+using Data.Enum;
 using Manager;
 using UnityEngine;
 using UnityEngine.AI;
@@ -60,7 +62,7 @@ namespace Actor.AITank
 
         void Update()
         {
-
+            DebugDrawHelper.DrawPath(_path, Color.red);
         }
 
         void FixedUpdate()
@@ -144,7 +146,7 @@ namespace Actor.AITank
                 }
             }
         }
-        
+
         /// <summary>
         /// Moves the tank towards the set destination.
         /// </summary>
@@ -152,17 +154,15 @@ namespace Actor.AITank
         {
             if (IsAtDestination())
             {
-                Debug.Log("already at destination 1");
                 return;
             }
 
-            var nextPos = _path.corners[1];
+            var nextPos = _path.corners[1]; 
             if (Vector3.Distance(transform.position, nextPos) < 0.5f)
             {
                 RecalculatePath();
                 if (IsAtDestination())
                 {
-                    Debug.Log("already at destination 2");
                     return;
                 }
             }
@@ -221,8 +221,6 @@ namespace Actor.AITank
             // {
             //     Debug.Log($"[{i}] {_path.corners[i]}");
             // }
-
-            DebugDrawHelper.DrawPath(_path, Color.red);
         }
 
         /// <summary>
@@ -247,6 +245,14 @@ namespace Actor.AITank
                 return float.MaxValue;
 
             return Vector3.Distance(transform.position, _destination);
+        }
+
+        public Vector3 GetDirectionToDestination()
+        {
+            if (_path.corners.Length < 2f)
+                return transform.forward;
+
+            return (_path.corners[1] - transform.position).normalized;
         }
 
         public void RecalculatePath() => _agent.CalculatePath(_destination, _path);
