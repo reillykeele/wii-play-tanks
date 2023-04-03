@@ -1,0 +1,3 @@
+[submodule "Tanks/Assets/Scripts/Util"]
+	path = Tanks/Assets/Scripts/Util
+	url = https://github.com/reillykeele/unity-util.git
